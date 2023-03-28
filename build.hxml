@@ -1,0 +1,12 @@
+-m Main
+--macro define('go2hx')
+--macro stdgo.internal.Macro.init()
+-D js-es=6
+-D source-map
+-D shallow-expose
+-D keep-inline-positions
+-D std-encoding-utf8
+-D simulate_num
+-D hl-ver=1.11.0
+-D no-deprecation-warnings
+--interp
