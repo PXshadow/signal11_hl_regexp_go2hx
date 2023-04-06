@@ -376,14 +376,7 @@ private function _noescape(_p:stdgo.unsafe.Unsafe.UnsafePointer):stdgo.unsafe.Un
     // For strings of length zero the string "" will be returned
     // and no allocation is made.
 **/
-function clone(_s:GoString):GoString {
-        if ((_s.length) == ((0 : GoInt))) {
-            return Go.str();
-        };
-        var _b = new Slice<GoUInt8>((_s.length : GoInt).toBasic(), 0).__setNumber32__();
-        Go.copySlice(_b, _s);
-        return (stdgo.unsafe.Unsafe.string(Go.pointer(_b[(0 : GoInt)]), (_b.length)) : GoString);
-    }
+function clone(_s:GoString):GoString return _s;
 /**
     // Compare returns an integer comparing two strings lexicographically.
     // The result will be 0 if a == b, -1 if a < b, and +1 if a > b.
@@ -1992,16 +1985,10 @@ class Builder_asInterface {
     **/
     @:keep
     static public function string( _b:Ref<Builder>):GoString {
-        return (stdgo.unsafe.Unsafe.string(stdgo.unsafe.Unsafe.sliceData(_b._buf), (_b._buf.length)) : GoString);
+        return ((Go.toInterface((_b._buf : Ref<Slice<GoUInt8>>)) : stdgo.unsafe.Unsafe.UnsafePointer).__convert__(stdgo.internal.reflect.Reflect.GoType.pointerType({ get : () -> stdgo.internal.reflect.Reflect.GoType.basic(string_kind) })) : Pointer<GoString>).value;
     }
     @:keep
-    static public function _copyCheck( _b:Ref<Builder>):Void {
-        if (_b._addr == null || (_b._addr : Dynamic).__nil__) {
-            _b._addr = (_noescape((Go.toInterface(_b) : stdgo.unsafe.Unsafe.UnsafePointer)).__convert__(stdgo.internal.reflect.Reflect.GoType.refType({ get : () -> stdgo.internal.reflect.Reflect.GoType.named("stdgo.strings.Strings.Builder", [], stdgo.internal.reflect.Reflect.GoType.structType([{ name : "_addr", embedded : false, tag : "", type : { get : () -> stdgo.internal.reflect.Reflect.GoType.refType({ get : () -> stdgo.internal.reflect.Reflect.GoType.named("stdgo.strings.Strings.Builder", [], stdgo.internal.reflect.Reflect.GoType.invalidType, false, { get : () -> null }) }) }, optional : false }, { name : "_buf", embedded : false, tag : "", type : { get : () -> stdgo.internal.reflect.Reflect.GoType.sliceType({ get : () -> stdgo.internal.reflect.Reflect.GoType.basic(uint8_kind) }) }, optional : false }]), false, { get : () -> null }) })) : Ref<Builder>);
-        } else if (_b._addr != (_b)) {
-            throw Go.toInterface(("strings: illegal use of non-zero Builder copied by value" : GoString));
-        };
-    }
+    static public function _copyCheck( _b:Ref<Builder>):Void _b._addr = _b;
 }
 class Reader_asInterface {
     /**

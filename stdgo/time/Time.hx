@@ -3990,7 +3990,7 @@ private function _parse(_layout:GoString, _value:GoString, _defaultLocation:Ref<
                                     break;
                                 };
                                 var _n:GoInt = (2 : GoInt);
-                                Go.cfor((_n < _value.length) && _isDigit(_value, _n), _n++, {});
+                                Go.cfor((_n < _value.length) && _isDigit(_value, _n), _n++, throw "not implemented: _parse");
                                 {
                                     var __tmp__ = _parseNanoseconds(_value, _n);
                                     _nsec = __tmp__._0;
@@ -4589,7 +4589,7 @@ private function _disablePlatformSources():() -> Void {
             _platformZoneSources = _origPlatformZoneSources;
         };
     }
-private function _empty(_arg:AnyInterface, _seq:GoUIntptr):Void {}
+private function _empty(_arg:AnyInterface, _seq:GoUIntptr):Void throw "not implemented: _empty";
 /**
     // Test that a runtimeTimer with a period that would overflow when on
     // expiration does not throw or cause other timers to hang.
@@ -4635,7 +4635,7 @@ function checkRuntimeTimerPeriodOverflow():Void {
     // Sleep pauses the current goroutine for at least the duration d.
     // A negative or zero duration causes Sleep to return immediately.
 **/
-function sleep(_d:Duration):Void {}
+function sleep(_d:Duration):Void throw "not implemented: sleep";
 /**
     // when is a helper function for setting the 'when' field of a runtimeTimer.
     // It returns what the time will be, in nanoseconds, Duration d in the future.

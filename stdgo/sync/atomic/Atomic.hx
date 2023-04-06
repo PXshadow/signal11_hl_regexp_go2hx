@@ -279,84 +279,84 @@ private var _firstStoreInProgress : GoByte = (0 : GoUInt8);
     // SwapInt32 atomically stores new into *addr and returns the previous *addr value.
     // Consider using the more ergonomic and less error-prone [Int32.Swap] instead.
 **/
-function swapInt32(_addr:Pointer<GoInt32>, _new:GoInt32):GoInt32 throw "stdgo.sync.atomic.swapInt32 is not yet implemented";
+function swapInt32(_addr:Pointer<GoInt32>, _new:GoInt32):GoInt32 throw "sync.atomic.swapInt32 is not yet implemented";
 /**
     // SwapInt64 atomically stores new into *addr and returns the previous *addr value.
     // Consider using the more ergonomic and less error-prone [Int64.Swap] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function swapInt64(_addr:Pointer<GoInt64>, _new:GoInt64):GoInt64 throw "stdgo.sync.atomic.swapInt64 is not yet implemented";
+function swapInt64(_addr:Pointer<GoInt64>, _new:GoInt64):GoInt64 throw "sync.atomic.swapInt64 is not yet implemented";
 /**
     // SwapUint32 atomically stores new into *addr and returns the previous *addr value.
     // Consider using the more ergonomic and less error-prone [Uint32.Swap] instead.
 **/
-function swapUint32(_addr:Pointer<GoUInt32>, _new:GoUInt32):GoUInt32 throw "stdgo.sync.atomic.swapUint32 is not yet implemented";
+function swapUint32(_addr:Pointer<GoUInt32>, _new:GoUInt32):GoUInt32 throw "sync.atomic.swapUint32 is not yet implemented";
 /**
     // SwapUint64 atomically stores new into *addr and returns the previous *addr value.
     // Consider using the more ergonomic and less error-prone [Uint64.Swap] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function swapUint64(_addr:Pointer<GoUInt64>, _new:GoUInt64):GoUInt64 throw "stdgo.sync.atomic.swapUint64 is not yet implemented";
+function swapUint64(_addr:Pointer<GoUInt64>, _new:GoUInt64):GoUInt64 throw "sync.atomic.swapUint64 is not yet implemented";
 /**
     // SwapUintptr atomically stores new into *addr and returns the previous *addr value.
     // Consider using the more ergonomic and less error-prone [Uintptr.Swap] instead.
 **/
-function swapUintptr(_addr:Pointer<GoUIntptr>, _new:GoUIntptr):GoUIntptr throw "stdgo.sync.atomic.swapUintptr is not yet implemented";
+function swapUintptr(_addr:Pointer<GoUIntptr>, _new:GoUIntptr):GoUIntptr throw "sync.atomic.swapUintptr is not yet implemented";
 /**
     // SwapPointer atomically stores new into *addr and returns the previous *addr value.
     // Consider using the more ergonomic and less error-prone [Pointer.Swap] instead.
 **/
-function swapPointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>, _new:stdgo.unsafe.Unsafe.UnsafePointer):stdgo.unsafe.Unsafe.UnsafePointer throw "stdgo.sync.atomic.swapPointer is not yet implemented";
+function swapPointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>, _new:stdgo.unsafe.Unsafe.UnsafePointer):stdgo.unsafe.Unsafe.UnsafePointer throw "sync.atomic.swapPointer is not yet implemented";
 /**
     // CompareAndSwapInt32 executes the compare-and-swap operation for an int32 value.
     // Consider using the more ergonomic and less error-prone [Int32.CompareAndSwap] instead.
 **/
-function compareAndSwapInt32(_addr:Pointer<GoInt32>, _old:GoInt32, _new:GoInt32):Bool throw "stdgo.sync.atomic.compareAndSwapInt32 is not yet implemented";
+function compareAndSwapInt32(_addr:Pointer<GoInt32>, _old:GoInt32, _new:GoInt32):Bool throw "sync.atomic.compareAndSwapInt32 is not yet implemented";
 /**
     // CompareAndSwapInt64 executes the compare-and-swap operation for an int64 value.
     // Consider using the more ergonomic and less error-prone [Int64.CompareAndSwap] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function compareAndSwapInt64(_addr:Pointer<GoInt64>, _old:GoInt64, _new:GoInt64):Bool throw "stdgo.sync.atomic.compareAndSwapInt64 is not yet implemented";
+function compareAndSwapInt64(_addr:Pointer<GoInt64>, _old:GoInt64, _new:GoInt64):Bool throw "sync.atomic.compareAndSwapInt64 is not yet implemented";
 /**
     // CompareAndSwapUint32 executes the compare-and-swap operation for a uint32 value.
     // Consider using the more ergonomic and less error-prone [Uint32.CompareAndSwap] instead.
 **/
-function compareAndSwapUint32(_addr:Pointer<GoUInt32>, _old:GoUInt32, _new:GoUInt32):Bool throw "stdgo.sync.atomic.compareAndSwapUint32 is not yet implemented";
+function compareAndSwapUint32(_addr:Pointer<GoUInt32>, _old:GoUInt32, _new:GoUInt32):Bool throw "sync.atomic.compareAndSwapUint32 is not yet implemented";
 /**
     // CompareAndSwapUint64 executes the compare-and-swap operation for a uint64 value.
     // Consider using the more ergonomic and less error-prone [Uint64.CompareAndSwap] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function compareAndSwapUint64(_addr:Pointer<GoUInt64>, _old:GoUInt64, _new:GoUInt64):Bool throw "stdgo.sync.atomic.compareAndSwapUint64 is not yet implemented";
+function compareAndSwapUint64(_addr:Pointer<GoUInt64>, _old:GoUInt64, _new:GoUInt64):Bool throw "sync.atomic.compareAndSwapUint64 is not yet implemented";
 /**
     // CompareAndSwapUintptr executes the compare-and-swap operation for a uintptr value.
     // Consider using the more ergonomic and less error-prone [Uintptr.CompareAndSwap] instead.
 **/
-function compareAndSwapUintptr(_addr:Pointer<GoUIntptr>, _old:GoUIntptr, _new:GoUIntptr):Bool throw "stdgo.sync.atomic.compareAndSwapUintptr is not yet implemented";
+function compareAndSwapUintptr(_addr:Pointer<GoUIntptr>, _old:GoUIntptr, _new:GoUIntptr):Bool throw "sync.atomic.compareAndSwapUintptr is not yet implemented";
 /**
     // CompareAndSwapPointer executes the compare-and-swap operation for a unsafe.Pointer value.
     // Consider using the more ergonomic and less error-prone [Pointer.CompareAndSwap] instead.
 **/
-function compareAndSwapPointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>, _old:stdgo.unsafe.Unsafe.UnsafePointer, _new:stdgo.unsafe.Unsafe.UnsafePointer):Bool throw "stdgo.sync.atomic.compareAndSwapPointer is not yet implemented";
+function compareAndSwapPointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>, _old:stdgo.unsafe.Unsafe.UnsafePointer, _new:stdgo.unsafe.Unsafe.UnsafePointer):Bool throw "sync.atomic.compareAndSwapPointer is not yet implemented";
 /**
     // AddInt32 atomically adds delta to *addr and returns the new value.
     // Consider using the more ergonomic and less error-prone [Int32.Add] instead.
 **/
-function addInt32(_addr:Pointer<GoInt32>, _delta:GoInt32):GoInt32 throw "stdgo.sync.atomic.addInt32 is not yet implemented";
+function addInt32(_addr:Pointer<GoInt32>, _delta:GoInt32):GoInt32 throw "sync.atomic.addInt32 is not yet implemented";
 /**
     // AddUint32 atomically adds delta to *addr and returns the new value.
     // To subtract a signed positive constant value c from x, do AddUint32(&x, ^uint32(c-1)).
     // In particular, to decrement x, do AddUint32(&x, ^uint32(0)).
     // Consider using the more ergonomic and less error-prone [Uint32.Add] instead.
 **/
-function addUint32(_addr:Pointer<GoUInt32>, _delta:GoUInt32):GoUInt32 throw "stdgo.sync.atomic.addUint32 is not yet implemented";
+function addUint32(_addr:Pointer<GoUInt32>, _delta:GoUInt32):GoUInt32 throw "sync.atomic.addUint32 is not yet implemented";
 /**
     // AddInt64 atomically adds delta to *addr and returns the new value.
     // Consider using the more ergonomic and less error-prone [Int64.Add] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function addInt64(_addr:Pointer<GoInt64>, _delta:GoInt64):GoInt64 throw "stdgo.sync.atomic.addInt64 is not yet implemented";
+function addInt64(_addr:Pointer<GoInt64>, _delta:GoInt64):GoInt64 throw "sync.atomic.addInt64 is not yet implemented";
 /**
     // AddUint64 atomically adds delta to *addr and returns the new value.
     // To subtract a signed positive constant value c from x, do AddUint64(&x, ^uint64(c-1)).
@@ -364,85 +364,89 @@ function addInt64(_addr:Pointer<GoInt64>, _delta:GoInt64):GoInt64 throw "stdgo.s
     // Consider using the more ergonomic and less error-prone [Uint64.Add] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function addUint64(_addr:Pointer<GoUInt64>, _delta:GoUInt64):GoUInt64 throw "stdgo.sync.atomic.addUint64 is not yet implemented";
+function addUint64(_addr:Pointer<GoUInt64>, _delta:GoUInt64):GoUInt64 throw "sync.atomic.addUint64 is not yet implemented";
 /**
     // AddUintptr atomically adds delta to *addr and returns the new value.
     // Consider using the more ergonomic and less error-prone [Uintptr.Add] instead.
 **/
-function addUintptr(_addr:Pointer<GoUIntptr>, _delta:GoUIntptr):GoUIntptr throw "stdgo.sync.atomic.addUintptr is not yet implemented";
+function addUintptr(_addr:Pointer<GoUIntptr>, _delta:GoUIntptr):GoUIntptr throw "sync.atomic.addUintptr is not yet implemented";
 /**
     // LoadInt32 atomically loads *addr.
     // Consider using the more ergonomic and less error-prone [Int32.Load] instead.
 **/
-function loadInt32(_addr:Pointer<GoInt32>):GoInt32 throw "stdgo.sync.atomic.loadInt32 is not yet implemented";
+function loadInt32(_addr:Pointer<GoInt32>):GoInt32 throw "sync.atomic.loadInt32 is not yet implemented";
 /**
     // LoadInt64 atomically loads *addr.
     // Consider using the more ergonomic and less error-prone [Int64.Load] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function loadInt64(_addr:Pointer<GoInt64>):GoInt64 throw "stdgo.sync.atomic.loadInt64 is not yet implemented";
+function loadInt64(_addr:Pointer<GoInt64>):GoInt64 throw "sync.atomic.loadInt64 is not yet implemented";
 /**
     // LoadUint32 atomically loads *addr.
     // Consider using the more ergonomic and less error-prone [Uint32.Load] instead.
 **/
-function loadUint32(_addr:Pointer<GoUInt32>):GoUInt32 throw "stdgo.sync.atomic.loadUint32 is not yet implemented";
+function loadUint32(_addr:Pointer<GoUInt32>):GoUInt32 throw "sync.atomic.loadUint32 is not yet implemented";
 /**
     // LoadUint64 atomically loads *addr.
     // Consider using the more ergonomic and less error-prone [Uint64.Load] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function loadUint64(_addr:Pointer<GoUInt64>):GoUInt64 throw "stdgo.sync.atomic.loadUint64 is not yet implemented";
+function loadUint64(_addr:Pointer<GoUInt64>):GoUInt64 throw "sync.atomic.loadUint64 is not yet implemented";
 /**
     // LoadUintptr atomically loads *addr.
     // Consider using the more ergonomic and less error-prone [Uintptr.Load] instead.
 **/
-function loadUintptr(_addr:Pointer<GoUIntptr>):GoUIntptr throw "stdgo.sync.atomic.loadUintptr is not yet implemented";
+function loadUintptr(_addr:Pointer<GoUIntptr>):GoUIntptr throw "sync.atomic.loadUintptr is not yet implemented";
 /**
     // LoadPointer atomically loads *addr.
     // Consider using the more ergonomic and less error-prone [Pointer.Load] instead.
 **/
-function loadPointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>):stdgo.unsafe.Unsafe.UnsafePointer throw "stdgo.sync.atomic.loadPointer is not yet implemented";
+function loadPointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>):stdgo.unsafe.Unsafe.UnsafePointer throw "sync.atomic.loadPointer is not yet implemented";
 /**
     // StoreInt32 atomically stores val into *addr.
     // Consider using the more ergonomic and less error-prone [Int32.Store] instead.
 **/
-function storeInt32(_addr:Pointer<GoInt32>, _val:GoInt32):Void throw "stdgo.sync.atomic.storeInt32 is not yet implemented";
+function storeInt32(_addr:Pointer<GoInt32>, _val:GoInt32):Void throw "sync.atomic.storeInt32 is not yet implemented";
 /**
     // StoreInt64 atomically stores val into *addr.
     // Consider using the more ergonomic and less error-prone [Int64.Store] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function storeInt64(_addr:Pointer<GoInt64>, _val:GoInt64):Void throw "stdgo.sync.atomic.storeInt64 is not yet implemented";
+function storeInt64(_addr:Pointer<GoInt64>, _val:GoInt64):Void throw "sync.atomic.storeInt64 is not yet implemented";
 /**
     // StoreUint32 atomically stores val into *addr.
     // Consider using the more ergonomic and less error-prone [Uint32.Store] instead.
 **/
-function storeUint32(_addr:Pointer<GoUInt32>, _val:GoUInt32):Void throw "stdgo.sync.atomic.storeUint32 is not yet implemented";
+function storeUint32(_addr:Pointer<GoUInt32>, _val:GoUInt32):Void {
+        _addr.value = _val;
+    }
 /**
     // StoreUint64 atomically stores val into *addr.
     // Consider using the more ergonomic and less error-prone [Uint64.Store] instead
     // (particularly if you target 32-bit platforms; see the bugs section).
 **/
-function storeUint64(_addr:Pointer<GoUInt64>, _val:GoUInt64):Void throw "stdgo.sync.atomic.storeUint64 is not yet implemented";
+function storeUint64(_addr:Pointer<GoUInt64>, _val:GoUInt64):Void {
+        _addr.value = _val;
+    }
 /**
     // StoreUintptr atomically stores val into *addr.
     // Consider using the more ergonomic and less error-prone [Uintptr.Store] instead.
 **/
-function storeUintptr(_addr:Pointer<GoUIntptr>, _val:GoUIntptr):Void throw "stdgo.sync.atomic.storeUintptr is not yet implemented";
+function storeUintptr(_addr:Pointer<GoUIntptr>, _val:GoUIntptr):Void throw "sync.atomic.storeUintptr is not yet implemented";
 /**
     // StorePointer atomically stores val into *addr.
     // Consider using the more ergonomic and less error-prone [Pointer.Store] instead.
 **/
-function storePointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>, _val:stdgo.unsafe.Unsafe.UnsafePointer):Void throw "stdgo.sync.atomic.storePointer is not yet implemented";
+function storePointer(_addr:Pointer<stdgo.unsafe.Unsafe.UnsafePointer>, _val:stdgo.unsafe.Unsafe.UnsafePointer):Void throw "sync.atomic.storePointer is not yet implemented";
 /**
     // b32 returns a uint32 0 or 1 representing b.
 **/
-private function _b32(_b:Bool):GoUInt32 throw "stdgo.sync.atomic._b32 is not yet implemented";
+private function _b32(_b:Bool):GoUInt32 throw "sync.atomic._b32 is not yet implemented";
 /**
     // Disable/enable preemption, implemented in runtime.
 **/
-private function _runtime_procPin():Void throw "stdgo.sync.atomic._runtime_procPin is not yet implemented";
-private function _runtime_procUnpin():Void throw "stdgo.sync.atomic._runtime_procUnpin is not yet implemented";
+private function _runtime_procPin():Void throw "sync.atomic._runtime_procPin is not yet implemented";
+private function _runtime_procUnpin():Void throw "sync.atomic._runtime_procUnpin is not yet implemented";
 class Bool__asInterface {
     /**
         // CompareAndSwap executes the compare-and-swap operation for the boolean value x.
@@ -477,22 +481,22 @@ class Bool__asInterface {
         // CompareAndSwap executes the compare-and-swap operation for the boolean value x.
     **/
     @:keep
-    static public function compareAndSwap( _x:Ref<Bool_>, _old:Bool, _new:Bool):Bool throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _x:Ref<Bool_>, _old:Bool, _new:Bool):Bool throw "sync.atomic.compareAndSwap is not yet implemented";
     /**
         // Swap atomically stores new into x and returns the previous value.
     **/
     @:keep
-    static public function swap( _x:Ref<Bool_>, _new:Bool):Bool throw "stdgo.sync.atomic.swap is not yet implemented";
+    static public function swap( _x:Ref<Bool_>, _new:Bool):Bool throw "sync.atomic.swap is not yet implemented";
     /**
         // Store atomically stores val into x.
     **/
     @:keep
-    static public function store( _x:Ref<Bool_>, _val:Bool):Void throw "stdgo.sync.atomic.store is not yet implemented";
+    static public function store( _x:Ref<Bool_>, _val:Bool):Void storeUint32(Go.pointer(_x._v), _val ? 1 : 0);
     /**
         // Load atomically loads and returns the value stored in x.
     **/
     @:keep
-    static public function load( _x:Ref<Bool_>):Bool throw "stdgo.sync.atomic.load is not yet implemented";
+    static public function load( _x:Ref<Bool_>):Bool throw "sync.atomic.load is not yet implemented";
 }
 class Pointer__asInterface<T> {
     /**
@@ -584,27 +588,27 @@ class Int32_asInterface {
         // Add atomically adds delta to x and returns the new value.
     **/
     @:keep
-    static public function add( _x:Ref<Int32>, _delta:GoInt32):GoInt32 throw "stdgo.sync.atomic.add is not yet implemented";
+    static public function add( _x:Ref<Int32>, _delta:GoInt32):GoInt32 throw "sync.atomic.add is not yet implemented";
     /**
         // CompareAndSwap executes the compare-and-swap operation for x.
     **/
     @:keep
-    static public function compareAndSwap( _x:Ref<Int32>, _old:GoInt32, _new:GoInt32):Bool throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _x:Ref<Int32>, _old:GoInt32, _new:GoInt32):Bool throw "sync.atomic.compareAndSwap is not yet implemented";
     /**
         // Swap atomically stores new into x and returns the previous value.
     **/
     @:keep
-    static public function swap( _x:Ref<Int32>, _new:GoInt32):GoInt32 throw "stdgo.sync.atomic.swap is not yet implemented";
+    static public function swap( _x:Ref<Int32>, _new:GoInt32):GoInt32 throw "sync.atomic.swap is not yet implemented";
     /**
         // Store atomically stores val into x.
     **/
     @:keep
-    static public function store( _x:Ref<Int32>, _val:GoInt32):Void throw "stdgo.sync.atomic.store is not yet implemented";
+    static public function store( _x:Ref<Int32>, _val:GoInt32):Void throw "sync.atomic.store is not yet implemented";
     /**
         // Load atomically loads and returns the value stored in x.
     **/
     @:keep
-    static public function load( _x:Ref<Int32>):GoInt32 throw "stdgo.sync.atomic.load is not yet implemented";
+    static public function load( _x:Ref<Int32>):GoInt32 throw "sync.atomic.load is not yet implemented";
 }
 class Int64__asInterface {
     /**
@@ -645,27 +649,27 @@ class Int64__asInterface {
         // Add atomically adds delta to x and returns the new value.
     **/
     @:keep
-    static public function add( _x:Ref<Int64_>, _delta:GoInt64):GoInt64 throw "stdgo.sync.atomic.add is not yet implemented";
+    static public function add( _x:Ref<Int64_>, _delta:GoInt64):GoInt64 throw "sync.atomic.add is not yet implemented";
     /**
         // CompareAndSwap executes the compare-and-swap operation for x.
     **/
     @:keep
-    static public function compareAndSwap( _x:Ref<Int64_>, _old:GoInt64, _new:GoInt64):Bool throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _x:Ref<Int64_>, _old:GoInt64, _new:GoInt64):Bool throw "sync.atomic.compareAndSwap is not yet implemented";
     /**
         // Swap atomically stores new into x and returns the previous value.
     **/
     @:keep
-    static public function swap( _x:Ref<Int64_>, _new:GoInt64):GoInt64 throw "stdgo.sync.atomic.swap is not yet implemented";
+    static public function swap( _x:Ref<Int64_>, _new:GoInt64):GoInt64 throw "sync.atomic.swap is not yet implemented";
     /**
         // Store atomically stores val into x.
     **/
     @:keep
-    static public function store( _x:Ref<Int64_>, _val:GoInt64):Void throw "stdgo.sync.atomic.store is not yet implemented";
+    static public function store( _x:Ref<Int64_>, _val:GoInt64):Void throw "sync.atomic.store is not yet implemented";
     /**
         // Load atomically loads and returns the value stored in x.
     **/
     @:keep
-    static public function load( _x:Ref<Int64_>):GoInt64 throw "stdgo.sync.atomic.load is not yet implemented";
+    static public function load( _x:Ref<Int64_>):GoInt64 throw "sync.atomic.load is not yet implemented";
 }
 class Uint32_asInterface {
     /**
@@ -706,27 +710,27 @@ class Uint32_asInterface {
         // Add atomically adds delta to x and returns the new value.
     **/
     @:keep
-    static public function add( _x:Ref<Uint32>, _delta:GoUInt32):GoUInt32 throw "stdgo.sync.atomic.add is not yet implemented";
+    static public function add( _x:Ref<Uint32>, _delta:GoUInt32):GoUInt32 throw "sync.atomic.add is not yet implemented";
     /**
         // CompareAndSwap executes the compare-and-swap operation for x.
     **/
     @:keep
-    static public function compareAndSwap( _x:Ref<Uint32>, _old:GoUInt32, _new:GoUInt32):Bool throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _x:Ref<Uint32>, _old:GoUInt32, _new:GoUInt32):Bool throw "sync.atomic.compareAndSwap is not yet implemented";
     /**
         // Swap atomically stores new into x and returns the previous value.
     **/
     @:keep
-    static public function swap( _x:Ref<Uint32>, _new:GoUInt32):GoUInt32 throw "stdgo.sync.atomic.swap is not yet implemented";
+    static public function swap( _x:Ref<Uint32>, _new:GoUInt32):GoUInt32 throw "sync.atomic.swap is not yet implemented";
     /**
         // Store atomically stores val into x.
     **/
     @:keep
-    static public function store( _x:Ref<Uint32>, _val:GoUInt32):Void throw "stdgo.sync.atomic.store is not yet implemented";
+    static public function store( _x:Ref<Uint32>, _val:GoUInt32):Void throw "sync.atomic.store is not yet implemented";
     /**
         // Load atomically loads and returns the value stored in x.
     **/
     @:keep
-    static public function load( _x:Ref<Uint32>):GoUInt32 throw "stdgo.sync.atomic.load is not yet implemented";
+    static public function load( _x:Ref<Uint32>):GoUInt32 throw "sync.atomic.load is not yet implemented";
 }
 class Uint64_asInterface {
     /**
@@ -767,27 +771,27 @@ class Uint64_asInterface {
         // Add atomically adds delta to x and returns the new value.
     **/
     @:keep
-    static public function add( _x:Ref<Uint64>, _delta:GoUInt64):GoUInt64 throw "stdgo.sync.atomic.add is not yet implemented";
+    static public function add( _x:Ref<Uint64>, _delta:GoUInt64):GoUInt64 throw "sync.atomic.add is not yet implemented";
     /**
         // CompareAndSwap executes the compare-and-swap operation for x.
     **/
     @:keep
-    static public function compareAndSwap( _x:Ref<Uint64>, _old:GoUInt64, _new:GoUInt64):Bool throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _x:Ref<Uint64>, _old:GoUInt64, _new:GoUInt64):Bool throw "sync.atomic.compareAndSwap is not yet implemented";
     /**
         // Swap atomically stores new into x and returns the previous value.
     **/
     @:keep
-    static public function swap( _x:Ref<Uint64>, _new:GoUInt64):GoUInt64 throw "stdgo.sync.atomic.swap is not yet implemented";
+    static public function swap( _x:Ref<Uint64>, _new:GoUInt64):GoUInt64 throw "sync.atomic.swap is not yet implemented";
     /**
         // Store atomically stores val into x.
     **/
     @:keep
-    static public function store( _x:Ref<Uint64>, _val:GoUInt64):Void throw "stdgo.sync.atomic.store is not yet implemented";
+    static public function store( _x:Ref<Uint64>, _val:GoUInt64):Void throw "sync.atomic.store is not yet implemented";
     /**
         // Load atomically loads and returns the value stored in x.
     **/
     @:keep
-    static public function load( _x:Ref<Uint64>):GoUInt64 throw "stdgo.sync.atomic.load is not yet implemented";
+    static public function load( _x:Ref<Uint64>):GoUInt64 throw "sync.atomic.load is not yet implemented";
 }
 class Uintptr_asInterface {
     /**
@@ -828,27 +832,27 @@ class Uintptr_asInterface {
         // Add atomically adds delta to x and returns the new value.
     **/
     @:keep
-    static public function add( _x:Ref<Uintptr>, _delta:GoUIntptr):GoUIntptr throw "stdgo.sync.atomic.add is not yet implemented";
+    static public function add( _x:Ref<Uintptr>, _delta:GoUIntptr):GoUIntptr throw "sync.atomic.add is not yet implemented";
     /**
         // CompareAndSwap executes the compare-and-swap operation for x.
     **/
     @:keep
-    static public function compareAndSwap( _x:Ref<Uintptr>, _old:GoUIntptr, _new:GoUIntptr):Bool throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _x:Ref<Uintptr>, _old:GoUIntptr, _new:GoUIntptr):Bool throw "sync.atomic.compareAndSwap is not yet implemented";
     /**
         // Swap atomically stores new into x and returns the previous value.
     **/
     @:keep
-    static public function swap( _x:Ref<Uintptr>, _new:GoUIntptr):GoUIntptr throw "stdgo.sync.atomic.swap is not yet implemented";
+    static public function swap( _x:Ref<Uintptr>, _new:GoUIntptr):GoUIntptr throw "sync.atomic.swap is not yet implemented";
     /**
         // Store atomically stores val into x.
     **/
     @:keep
-    static public function store( _x:Ref<Uintptr>, _val:GoUIntptr):Void throw "stdgo.sync.atomic.store is not yet implemented";
+    static public function store( _x:Ref<Uintptr>, _val:GoUIntptr):Void throw "sync.atomic.store is not yet implemented";
     /**
         // Load atomically loads and returns the value stored in x.
     **/
     @:keep
-    static public function load( _x:Ref<Uintptr>):GoUIntptr throw "stdgo.sync.atomic.load is not yet implemented";
+    static public function load( _x:Ref<Uintptr>):GoUIntptr throw "sync.atomic.load is not yet implemented";
 }
 class T_noCopy_asInterface {
     @:keep
@@ -868,12 +872,12 @@ class T_noCopy_asInterface {
 }
 @:keep @:allow(stdgo.sync.atomic.Atomic.T_noCopy_asInterface) class T_noCopy_static_extension {
     @:keep
-    static public function unlock( _:Ref<T_noCopy>):Void throw "stdgo.sync.atomic.unlock is not yet implemented";
+    static public function unlock( _:Ref<T_noCopy>):Void throw "sync.atomic.unlock is not yet implemented";
     /**
         // Lock is a no-op used by -copylocks checker from `go vet`.
     **/
     @:keep
-    static public function lock( _:Ref<T_noCopy>):Void throw "stdgo.sync.atomic.lock is not yet implemented";
+    static public function lock( _:Ref<T_noCopy>):Void throw "sync.atomic.lock is not yet implemented";
 }
 class Value_asInterface {
     /**
@@ -924,7 +928,7 @@ class Value_asInterface {
         // CompareAndSwap(old, nil).
     **/
     @:keep
-    static public function compareAndSwap( _v:Ref<Value>, _old:AnyInterface, _new:AnyInterface):Bool throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _v:Ref<Value>, _old:AnyInterface, _new:AnyInterface):Bool throw "sync.atomic.compareAndSwap is not yet implemented";
     /**
         // Swap stores new into Value and returns the previous value. It returns nil if
         // the Value is empty.
@@ -933,18 +937,18 @@ class Value_asInterface {
         // type. Swap of an inconsistent type panics, as does Swap(nil).
     **/
     @:keep
-    static public function swap( _v:Ref<Value>, _new:AnyInterface):AnyInterface throw "stdgo.sync.atomic.swap is not yet implemented";
+    static public function swap( _v:Ref<Value>, _new:AnyInterface):AnyInterface throw "sync.atomic.swap is not yet implemented";
     /**
         // Store sets the value of the Value v to val.
         // All calls to Store for a given Value must use values of the same concrete type.
         // Store of an inconsistent type panics, as does Store(nil).
     **/
     @:keep
-    static public function store( _v:Ref<Value>, _val:AnyInterface):Void throw "stdgo.sync.atomic.store is not yet implemented";
+    static public function store( _v:Ref<Value>, _val:AnyInterface):Void throw "sync.atomic.store is not yet implemented";
     /**
         // Load returns the value set by the most recent Store.
         // It returns nil if there has been no call to Store for this Value.
     **/
     @:keep
-    static public function load( _v:Ref<Value>):AnyInterface throw "stdgo.sync.atomic.load is not yet implemented";
+    static public function load( _v:Ref<Value>):AnyInterface throw "sync.atomic.load is not yet implemented";
 }

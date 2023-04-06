@@ -186,13 +186,13 @@ private final _m4 = (281470681808895i64 : GoUInt64);
     
     
 **/
-private var _overflowError : Error = (null : Error);
+private var _overflowError : Error = @:privateAccess stdgo.Error._overflowError;
 /**
     //go:linkname divideError runtime.divideError
     
     
 **/
-private var _divideError : Error = (null : Error);
+private var _divideError : Error = @:privateAccess stdgo.Error._divideError;
 /**
     
     

@@ -403,4 +403,4 @@ private function _indexByte(_s:GoString, _c:GoByte):GoInt {
 function name():GoString {
         return Go.str();
     }
-private function _doinit():Void {}
+private function _doinit():Void throw "not implemented: _doinit";

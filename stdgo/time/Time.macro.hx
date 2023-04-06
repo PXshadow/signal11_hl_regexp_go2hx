@@ -252,7 +252,7 @@ macro private function _parseRFC3339<T_bytes>(_s:haxe.macro.Expr.ExprOf<T_bytes>
                     var _nsec:GoInt = (0 : GoInt);
                     if (((_s.length >= (2 : GoInt)) && (_s[@:param_index (0 : GoInt)] == (46 : GoUInt8))) && _isDigit(_s, (1 : GoInt))) {
                         var _n:GoInt = (2 : GoInt);
-                        Go.cfor((_n < _s.length) && _isDigit(_s, _n), _n++, {});
+                        Go.cfor((_n < _s.length) && _isDigit(_s, _n), _n++, throw "not implemented: _parseRFC3339");
                         {
                             var __tmp__ = _parseNanoseconds(_s, _n);
                             _nsec = __tmp__._0;

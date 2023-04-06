@@ -4382,13 +4382,13 @@ class T_ss_asInterface {
             _digits = ("0123456789aAbBcCdDeEfF_" : GoString);
             _exp = ("pP" : GoString);
         };
-        while (_s._accept(_digits)) {};
+        while (_s._accept(_digits)) throw "not implemented: _floatToken";
         if (_s._accept(("." : GoString))) {
-            while (_s._accept(_digits)) {};
+            while (_s._accept(_digits)) throw "not implemented: _floatToken";
         };
         if (_s._accept(_exp)) {
             _s._accept(("+-" : GoString));
-            while (_s._accept(("0123456789_" : GoString))) {};
+            while (_s._accept(("0123456789_" : GoString))) throw "not implemented: _floatToken";
         };
         return (_s._buf : GoString);
     }
@@ -4519,7 +4519,7 @@ class T_ss_asInterface {
                 _s._errorString(("expected integer" : GoString));
             };
         };
-        while (_s._accept(_digits)) {};
+        while (_s._accept(_digits)) throw "not implemented: _scanNumber";
         return (_s._buf : GoString);
     }
     /**

@@ -3746,7 +3746,7 @@ class T_parser_asInterface {
                         };
                     };
                 };
-                if (_i == (_start)) {} else if (_i == (_start + (1 : GoInt))) {
+                if (_i == (_start)) throw "not implemented: _factor" else if (_i == (_start + (1 : GoInt))) {
                     _out = (_out.__append__(_sub[(_start : GoInt)]));
                 } else {
                     var _prefix = _p._newRegexp((3 : stdgo.regexp.syntax.Syntax.Op));
@@ -3783,7 +3783,7 @@ class T_parser_asInterface {
                         continue;
                     };
                 };
-                if (_i == (_start)) {} else if (_i == (_start + (1 : GoInt))) {
+                if (_i == (_start)) throw "not implemented: _factor" else if (_i == (_start + (1 : GoInt))) {
                     _out = (_out.__append__(_sub[(_start : GoInt)]));
                 } else {
                     var _prefix = _first;
@@ -3813,7 +3813,7 @@ class T_parser_asInterface {
                 if ((_i < _sub.length) && _isCharClass(_sub[(_i : GoInt)])) {
                     continue;
                 };
-                if (_i == (_start)) {} else if (_i == (_start + (1 : GoInt))) {
+                if (_i == (_start)) throw "not implemented: _factor" else if (_i == (_start + (1 : GoInt))) {
                     _out = (_out.__append__(_sub[(_start : GoInt)]));
                 } else {
                     var _max:GoInt = _start;

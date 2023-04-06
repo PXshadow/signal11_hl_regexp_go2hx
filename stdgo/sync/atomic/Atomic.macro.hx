@@ -34,7 +34,7 @@ class Pointer__static_extension {
         };
         {
             return macro {
-                function f( _x:Ref<Pointer_<$T>>, _old:Ref<$T>, _new:Ref<$T>) throw "stdgo.sync.atomic.compareAndSwap is not yet implemented";
+                function f( _x:Ref<Pointer_<$T>>, _old:Ref<$T>, _new:Ref<$T>) throw "sync.atomic.compareAndSwap is not yet implemented";
                 f($_x, $_old, $_new);
             };
         };
@@ -73,7 +73,7 @@ class Pointer__static_extension {
         };
         {
             return macro {
-                function f( _x:Ref<Pointer_<$T>>, _new:Ref<$T>) throw "stdgo.sync.atomic.swap is not yet implemented";
+                function f( _x:Ref<Pointer_<$T>>, _new:Ref<$T>) throw "sync.atomic.swap is not yet implemented";
                 f($_x, $_new);
             };
         };
@@ -112,7 +112,7 @@ class Pointer__static_extension {
         };
         {
             return macro {
-                function f( _x:Ref<Pointer_<$T>>, _val:Ref<$T>) throw "stdgo.sync.atomic.store is not yet implemented";
+                function f( _x:Ref<Pointer_<$T>>, _val:Ref<$T>) throw "sync.atomic.store is not yet implemented";
                 f($_x, $_val);
             };
         };
@@ -151,7 +151,7 @@ class Pointer__static_extension {
         };
         {
             return macro {
-                function f( _x:Ref<Pointer_<$T>>) throw "stdgo.sync.atomic.load is not yet implemented";
+                function f( _x:Ref<Pointer_<$T>>) throw "sync.atomic.load is not yet implemented";
                 f($_x);
             };
         };

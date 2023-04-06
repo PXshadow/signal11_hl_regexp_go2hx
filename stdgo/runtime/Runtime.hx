@@ -772,7 +772,7 @@ bySize);
     // the testing package's -test.cpuprofile flag instead of calling
     // SetCPUProfileRate directly.
 **/
-function setCPUProfileRate(_hz:GoInt):Void throw "stdgo.runtime.setCPUProfileRate is not yet implemented";
+function setCPUProfileRate(_hz:GoInt):Void throw "runtime.setCPUProfileRate is not yet implemented";
 /**
     // CPUProfile panics.
     // It formerly provided raw access to chunks of
@@ -784,14 +784,14 @@ function setCPUProfileRate(_hz:GoInt):Void throw "stdgo.runtime.setCPUProfileRat
     // or the handlers in the net/http/pprof package,
     // or the testing package's -test.cpuprofile flag instead.
 **/
-function cpuprofile():Slice<GoByte> throw "stdgo.runtime.cpuprofile is not yet implemented";
+function cpuprofile():Slice<GoByte> throw "runtime.cpuprofile is not yet implemented";
 /**
     // GOMAXPROCS sets the maximum number of CPUs that can be executing
     // simultaneously and returns the previous setting. It defaults to
     // the value of runtime.NumCPU. If n < 1, it does not change the current setting.
     // This call will go away when the scheduler improves.
 **/
-function gomaxprocs(_n:GoInt):GoInt throw "stdgo.runtime.gomaxprocs is not yet implemented";
+function gomaxprocs(_n:GoInt):GoInt return 1;
 /**
     // NumCPU returns the number of logical CPUs usable by the current process.
     //
@@ -799,15 +799,15 @@ function gomaxprocs(_n:GoInt):GoInt throw "stdgo.runtime.gomaxprocs is not yet i
     // at process startup. Changes to operating system CPU allocation after
     // process startup are not reflected.
 **/
-function numCPU():GoInt throw "stdgo.runtime.numCPU is not yet implemented";
+function numCPU():GoInt throw "runtime.numCPU is not yet implemented";
 /**
     // NumCgoCall returns the number of cgo calls made by the current process.
 **/
-function numCgoCall():GoInt64 throw "stdgo.runtime.numCgoCall is not yet implemented";
+function numCgoCall():GoInt64 throw "runtime.numCgoCall is not yet implemented";
 /**
     // NumGoroutine returns the number of goroutines that currently exist.
 **/
-function numGoroutine():GoInt throw "stdgo.runtime.numGoroutine is not yet implemented";
+function numGoroutine():GoInt throw "runtime.numGoroutine is not yet implemented";
 /**
     // Caller reports file and line number information about function invocations on
     // the calling goroutine's stack. The argument skip is the number of stack frames
@@ -816,7 +816,7 @@ function numGoroutine():GoInt throw "stdgo.runtime.numGoroutine is not yet imple
     // program counter, file name, and line number within the file of the corresponding
     // call. The boolean ok is false if it was not possible to recover the information.
 **/
-function caller(_skip:GoInt):{ var _0 : GoUIntptr; var _1 : GoString; var _2 : GoInt; var _3 : Bool; } throw "stdgo.runtime.caller is not yet implemented";
+function caller(_skip:GoInt):{ var _0 : GoUIntptr; var _1 : GoString; var _2 : GoInt; var _3 : Bool; } throw "runtime.caller is not yet implemented";
 /**
     // Callers fills the slice pc with the return program counters of function invocations
     // on the calling goroutine's stack. The argument skip is the number of stack frames
@@ -832,19 +832,19 @@ function caller(_skip:GoInt):{ var _0 : GoUIntptr; var _1 : GoString; var _2 : G
     // returned PCs, since these cannot account for inlining or return
     // program counter adjustment.
 **/
-function callers(_skip:GoInt, _pc:Slice<GoUIntptr>):GoInt throw "stdgo.runtime.callers is not yet implemented";
+function callers(_skip:GoInt, _pc:Slice<GoUIntptr>):GoInt throw "runtime.callers is not yet implemented";
 /**
     // GOROOT returns the root of the Go tree. It uses the
     // GOROOT environment variable, if set at process start,
     // or else the root used during the Go build.
 **/
-function goroot():GoString throw "stdgo.runtime.goroot is not yet implemented";
+function goroot():GoString throw "runtime.goroot is not yet implemented";
 /**
     // Version returns the Go tree's version string.
     // It is either the commit hash and date at the time of the build or,
     // when possible, a release tag like "go1.3".
 **/
-function version():GoString throw "stdgo.runtime.version is not yet implemented";
+function version():GoString throw "runtime.version is not yet implemented";
 /**
     // SetFinalizer sets the finalizer associated with obj to the provided
     // finalizer function. When the garbage collector finds an unreachable block
@@ -933,7 +933,7 @@ function version():GoString throw "stdgo.runtime.version is not yet implemented"
     // need to use appropriate synchronization, such as mutexes or atomic updates,
     // to avoid read-write races.
 **/
-function setFinalizer(_obj:AnyInterface, _finalizer:AnyInterface):Void throw "stdgo.runtime.setFinalizer is not yet implemented";
+function setFinalizer(_obj:AnyInterface, _finalizer:AnyInterface):Void throw "runtime.setFinalizer is not yet implemented";
 /**
     // KeepAlive marks its argument as currently reachable.
     // This ensures that the object is not freed, and its finalizer is not run,
@@ -960,13 +960,13 @@ function setFinalizer(_obj:AnyInterface, _finalizer:AnyInterface):Void throw "st
     // running prematurely. In particular, when used with unsafe.Pointer,
     // the rules for valid uses of unsafe.Pointer still apply.
 **/
-function keepAlive(_x:AnyInterface):Void throw "stdgo.runtime.keepAlive is not yet implemented";
+function keepAlive(_x:AnyInterface):Void throw "runtime.keepAlive is not yet implemented";
 /**
     // GC runs a garbage collection and blocks the caller until the
     // garbage collection is complete. It may also block the entire
     // program.
 **/
-function gc():Void throw "stdgo.runtime.gc is not yet implemented";
+function gc():Void throw "runtime.gc is not yet implemented";
 /**
     // SetBlockProfileRate controls the fraction of goroutine blocking events
     // that are reported in the blocking profile. The profiler aims to sample
@@ -975,7 +975,7 @@ function gc():Void throw "stdgo.runtime.gc is not yet implemented";
     // To include every blocking event in the profile, pass rate = 1.
     // To turn off profiling entirely, pass rate <= 0.
 **/
-function setBlockProfileRate(_rate:GoInt):Void throw "stdgo.runtime.setBlockProfileRate is not yet implemented";
+function setBlockProfileRate(_rate:GoInt):Void throw "runtime.setBlockProfileRate is not yet implemented";
 /**
     // SetMutexProfileFraction controls the fraction of mutex contention events
     // that are reported in the mutex profile. On average 1/rate events are
@@ -985,7 +985,7 @@ function setBlockProfileRate(_rate:GoInt):Void throw "stdgo.runtime.setBlockProf
     // To just read the current rate, pass rate < 0.
     // (For n>1 the details of sampling may change.)
 **/
-function setMutexProfileFraction(_rate:GoInt):GoInt throw "stdgo.runtime.setMutexProfileFraction is not yet implemented";
+function setMutexProfileFraction(_rate:GoInt):GoInt throw "runtime.setMutexProfileFraction is not yet implemented";
 /**
     // MemProfile returns a profile of memory allocated and freed per allocation
     // site.
@@ -1009,7 +1009,7 @@ function setMutexProfileFraction(_rate:GoInt):GoInt throw "stdgo.runtime.setMute
     // the testing package's -test.memprofile flag instead
     // of calling MemProfile directly.
 **/
-function memProfile(_p:Slice<MemProfileRecord>, _inuseZero:Bool):{ var _0 : GoInt; var _1 : Bool; } throw "stdgo.runtime.memProfile is not yet implemented";
+function memProfile(_p:Slice<MemProfileRecord>, _inuseZero:Bool):{ var _0 : GoInt; var _1 : Bool; } throw "runtime.memProfile is not yet implemented";
 /**
     // BlockProfile returns n, the number of records in the current blocking profile.
     // If len(p) >= n, BlockProfile copies the profile into p and returns n, true.
@@ -1019,7 +1019,7 @@ function memProfile(_p:Slice<MemProfileRecord>, _inuseZero:Bool):{ var _0 : GoIn
     // the testing package's -test.blockprofile flag instead
     // of calling BlockProfile directly.
 **/
-function blockProfile(_p:Slice<BlockProfileRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "stdgo.runtime.blockProfile is not yet implemented";
+function blockProfile(_p:Slice<BlockProfileRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "runtime.blockProfile is not yet implemented";
 /**
     // MutexProfile returns n, the number of records in the current mutex profile.
     // If len(p) >= n, MutexProfile copies the profile into p and returns n, true.
@@ -1028,7 +1028,7 @@ function blockProfile(_p:Slice<BlockProfileRecord>):{ var _0 : GoInt; var _1 : B
     // Most clients should use the runtime/pprof package
     // instead of calling MutexProfile directly.
 **/
-function mutexProfile(_p:Slice<BlockProfileRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "stdgo.runtime.mutexProfile is not yet implemented";
+function mutexProfile(_p:Slice<BlockProfileRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "runtime.mutexProfile is not yet implemented";
 /**
     // ThreadCreateProfile returns n, the number of records in the thread creation profile.
     // If len(p) >= n, ThreadCreateProfile copies the profile into p and returns n, true.
@@ -1037,7 +1037,7 @@ function mutexProfile(_p:Slice<BlockProfileRecord>):{ var _0 : GoInt; var _1 : B
     // Most clients should use the runtime/pprof package instead
     // of calling ThreadCreateProfile directly.
 **/
-function threadCreateProfile(_p:Slice<StackRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "stdgo.runtime.threadCreateProfile is not yet implemented";
+function threadCreateProfile(_p:Slice<StackRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "runtime.threadCreateProfile is not yet implemented";
 /**
     // GoroutineProfile returns n, the number of records in the active goroutine stack profile.
     // If len(p) >= n, GoroutineProfile copies the profile into p and returns n, true.
@@ -1046,14 +1046,14 @@ function threadCreateProfile(_p:Slice<StackRecord>):{ var _0 : GoInt; var _1 : B
     // Most clients should use the runtime/pprof package instead
     // of calling GoroutineProfile directly.
 **/
-function goroutineProfile(_p:Slice<StackRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "stdgo.runtime.goroutineProfile is not yet implemented";
+function goroutineProfile(_p:Slice<StackRecord>):{ var _0 : GoInt; var _1 : Bool; } throw "runtime.goroutineProfile is not yet implemented";
 /**
     // Stack formats a stack trace of the calling goroutine into buf
     // and returns the number of bytes written to buf.
     // If all is true, Stack formats stack traces of all other goroutines
     // into buf after the trace for the current goroutine.
 **/
-function stack(_buf:Slice<GoByte>, _all:Bool):GoInt throw "stdgo.runtime.stack is not yet implemented";
+function stack(_buf:Slice<GoByte>, _all:Bool):GoInt throw "runtime.stack is not yet implemented";
 /**
     // ReadMemStats populates m with memory allocator statistics.
     //
@@ -1062,7 +1062,7 @@ function stack(_buf:Slice<GoByte>, _all:Bool):GoInt throw "stdgo.runtime.stack i
     // which is a snapshot as of the most recently completed garbage
     // collection cycle.
 **/
-function readMemStats(_m:Ref<MemStats>):Void throw "stdgo.runtime.readMemStats is not yet implemented";
+function readMemStats(_m:Ref<MemStats>):Void throw "runtime.readMemStats is not yet implemented";
 /**
     // Goexit terminates the goroutine that calls it. No other goroutine is affected.
     // Goexit runs all deferred calls before terminating the goroutine. Because Goexit
@@ -1073,16 +1073,16 @@ function readMemStats(_m:Ref<MemStats>):Void throw "stdgo.runtime.readMemStats i
     // the program continues execution of other goroutines.
     // If all other goroutines exit, the program crashes.
 **/
-function goexit():Void throw "stdgo.runtime.goexit is not yet implemented";
+function goexit():Void throw "runtime.goexit is not yet implemented";
 /**
     // Gosched yields the processor, allowing other goroutines to run. It does not
     // suspend the current goroutine, so execution resumes automatically.
 **/
-function gosched():Void throw "stdgo.runtime.gosched is not yet implemented";
+function gosched():Void throw "runtime.gosched is not yet implemented";
 /**
     // Breakpoint executes a breakpoint trap.
 **/
-function breakpoint():Void throw "stdgo.runtime.breakpoint is not yet implemented";
+function breakpoint():Void throw "runtime.breakpoint is not yet implemented";
 /**
     // LockOSThread wires the calling goroutine to its current operating system thread.
     // The calling goroutine will always execute in that thread,
@@ -1099,7 +1099,7 @@ function breakpoint():Void throw "stdgo.runtime.breakpoint is not yet implemente
     // A goroutine should call LockOSThread before calling OS services or
     // non-Go library functions that depend on per-thread state.
 **/
-function lockOSThread():Void throw "stdgo.runtime.lockOSThread is not yet implemented";
+function lockOSThread():Void throw "runtime.lockOSThread is not yet implemented";
 /**
     // UnlockOSThread undoes an earlier call to LockOSThread.
     // If this drops the number of active LockOSThread calls on the
@@ -1114,13 +1114,13 @@ function lockOSThread():Void throw "stdgo.runtime.lockOSThread is not yet implem
     // the goroutine locked to the OS thread until the goroutine (and
     // hence the thread) exits.
 **/
-function unlockOSThread():Void throw "stdgo.runtime.unlockOSThread is not yet implemented";
+function unlockOSThread():Void throw "runtime.unlockOSThread is not yet implemented";
 /**
     // CallersFrames takes a slice of PC values returned by Callers and
     // prepares to return function/file/line information.
     // Do not change the slice until you are done with the Frames.
 **/
-function callersFrames(_callers:Slice<GoUIntptr>):Ref<Frames> throw "stdgo.runtime.callersFrames is not yet implemented";
+function callersFrames(_callers:Slice<GoUIntptr>):Ref<Frames> throw "runtime.callersFrames is not yet implemented";
 /**
     // FuncForPC returns a *Func describing the function that contains the
     // given program counter address, or else nil.
@@ -1129,7 +1129,7 @@ function callersFrames(_callers:Slice<GoUIntptr>):Ref<Frames> throw "stdgo.runti
     // the *Func describing the innermost function, but with an entry of
     // the outermost function.
 **/
-function funcForPC(_pc:GoUIntptr):Ref<Func> throw "stdgo.runtime.funcForPC is not yet implemented";
+function funcForPC(_pc:GoUIntptr):Ref<Func> throw "runtime.funcForPC is not yet implemented";
 /**
     // StartTrace enables tracing for the current process.
     // While tracing, the data will be buffered and available via ReadTrace.
@@ -1137,12 +1137,12 @@ function funcForPC(_pc:GoUIntptr):Ref<Func> throw "stdgo.runtime.funcForPC is no
     // Most clients should use the runtime/trace package or the testing package's
     // -test.trace flag instead of calling StartTrace directly.
 **/
-function startTrace():Error throw "stdgo.runtime.startTrace is not yet implemented";
+function startTrace():Error throw "runtime.startTrace is not yet implemented";
 /**
     // StopTrace stops tracing, if it was previously enabled.
     // StopTrace only returns after all the reads for the trace have completed.
 **/
-function stopTrace():Void throw "stdgo.runtime.stopTrace is not yet implemented";
+function stopTrace():Void throw "runtime.stopTrace is not yet implemented";
 /**
     // ReadTrace returns the next chunk of binary tracing data, blocking until data
     // is available. If tracing is turned off and all the data accumulated while it
@@ -1150,7 +1150,7 @@ function stopTrace():Void throw "stdgo.runtime.stopTrace is not yet implemented"
     // returned data before calling ReadTrace again.
     // ReadTrace must be called from one goroutine at a time.
 **/
-function readTrace():Slice<GoByte> throw "stdgo.runtime.readTrace is not yet implemented";
+function readTrace():Slice<GoByte> throw "runtime.readTrace is not yet implemented";
 /**
     // SetCgoTraceback records three C functions to use to gather
     // traceback information from C code and to convert that traceback
@@ -1314,7 +1314,7 @@ function readTrace():Slice<GoByte> throw "stdgo.runtime.readTrace is not yet imp
     //
     // SetCgoTraceback should be called only once, ideally from an init function.
 **/
-function setCgoTraceback(_version:GoInt, _traceback:stdgo.unsafe.Unsafe.UnsafePointer, _context:stdgo.unsafe.Unsafe.UnsafePointer, _symbolizer:stdgo.unsafe.Unsafe.UnsafePointer):Void throw "stdgo.runtime.setCgoTraceback is not yet implemented";
+function setCgoTraceback(_version:GoInt, _traceback:stdgo.unsafe.Unsafe.UnsafePointer, _context:stdgo.unsafe.Unsafe.UnsafePointer, _symbolizer:stdgo.unsafe.Unsafe.UnsafePointer):Void throw "runtime.setCgoTraceback is not yet implemented";
 class TypeAssertionError_asInterface {
     @:keep
     public dynamic function error():GoString return __self__.value.error();
@@ -1330,9 +1330,9 @@ class TypeAssertionError_asInterface {
 }
 @:keep @:allow(stdgo.runtime.Runtime.TypeAssertionError_asInterface) class TypeAssertionError_static_extension {
     @:keep
-    static public function error( _e:Ref<TypeAssertionError>):GoString throw "stdgo.runtime.error is not yet implemented";
+    static public function error( _e:Ref<TypeAssertionError>):GoString throw "runtime.error is not yet implemented";
     @:keep
-    static public function runtimeError( _:Ref<TypeAssertionError>):Void throw "stdgo.runtime.runtimeError is not yet implemented";
+    static public function runtimeError( _:Ref<TypeAssertionError>):Void throw "runtime.runtimeError is not yet implemented";
 }
 class StackRecord_asInterface {
     /**
@@ -1355,7 +1355,7 @@ class StackRecord_asInterface {
         // a prefix of r.Stack0.
     **/
     @:keep
-    static public function stack( _r:Ref<StackRecord>):Slice<GoUIntptr> throw "stdgo.runtime.stack is not yet implemented";
+    static public function stack( _r:Ref<StackRecord>):Slice<GoUIntptr> throw "runtime.stack is not yet implemented";
 }
 class MemProfileRecord_asInterface {
     /**
@@ -1388,17 +1388,17 @@ class MemProfileRecord_asInterface {
         // a prefix of r.Stack0.
     **/
     @:keep
-    static public function stack( _r:Ref<MemProfileRecord>):Slice<GoUIntptr> throw "stdgo.runtime.stack is not yet implemented";
+    static public function stack( _r:Ref<MemProfileRecord>):Slice<GoUIntptr> throw "runtime.stack is not yet implemented";
     /**
         // InUseObjects returns the number of objects in use (AllocObjects - FreeObjects).
     **/
     @:keep
-    static public function inUseObjects( _r:Ref<MemProfileRecord>):GoInt64 throw "stdgo.runtime.inUseObjects is not yet implemented";
+    static public function inUseObjects( _r:Ref<MemProfileRecord>):GoInt64 throw "runtime.inUseObjects is not yet implemented";
     /**
         // InUseBytes returns the number of bytes in use (AllocBytes - FreeBytes).
     **/
     @:keep
-    static public function inUseBytes( _r:Ref<MemProfileRecord>):GoInt64 throw "stdgo.runtime.inUseBytes is not yet implemented";
+    static public function inUseBytes( _r:Ref<MemProfileRecord>):GoInt64 throw "runtime.inUseBytes is not yet implemented";
 }
 class BlockProfileRecord_asInterface {
     @:embedded
@@ -1450,7 +1450,7 @@ class Frames_asInterface {
         // See the Frames example for idiomatic usage.
     **/
     @:keep
-    static public function next( _ci:Ref<Frames>):{ var _0 : Frame; var _1 : Bool; } throw "stdgo.runtime.next is not yet implemented";
+    static public function next( _ci:Ref<Frames>):{ var _0 : Frame; var _1 : Bool; } throw "runtime.next is not yet implemented";
 }
 class Func_asInterface {
     /**
@@ -1487,15 +1487,15 @@ class Func_asInterface {
         // counter within f.
     **/
     @:keep
-    static public function fileLine( _f:Ref<Func>, _pc:GoUIntptr):{ var _0 : GoString; var _1 : GoInt; } throw "stdgo.runtime.fileLine is not yet implemented";
+    static public function fileLine( _f:Ref<Func>, _pc:GoUIntptr):{ var _0 : GoString; var _1 : GoInt; } throw "runtime.fileLine is not yet implemented";
     /**
         // Entry returns the entry address of the function.
     **/
     @:keep
-    static public function entry( _f:Ref<Func>):GoUIntptr throw "stdgo.runtime.entry is not yet implemented";
+    static public function entry( _f:Ref<Func>):GoUIntptr throw "runtime.entry is not yet implemented";
     /**
         // Name returns the name of the function.
     **/
     @:keep
-    static public function name( _f:Ref<Func>):GoString throw "stdgo.runtime.name is not yet implemented";
+    static public function name( _f:Ref<Func>):GoString throw "runtime.name is not yet implemented";
 }

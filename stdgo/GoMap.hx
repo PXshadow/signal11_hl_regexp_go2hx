@@ -458,7 +458,11 @@ class GoAnyInterfaceMapKey {
 	public var ais:String;
 	public function new(k:AnyInterface) {
 		ai = k;
+		#if nolinkstd
+		ais = "";
+		#else
 		ais = stdgo.fmt.Fmt.sprintf("%v",k);
+		#end
 	}
 }
 

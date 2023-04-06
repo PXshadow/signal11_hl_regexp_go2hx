@@ -870,11 +870,11 @@ function runeCount(_p:Slice<GoByte>):GoInt {
                     var _c:GoUInt8 = _p[(_i + (1 : GoInt) : GoInt)];
                     if ((_c < _accept._lo) || (_accept._hi < _c)) {
                         _size = (1 : GoInt);
-                    } else if (_size == ((2 : GoInt))) {} else {
+                    } else if (_size == ((2 : GoInt))) throw "not implemented: runeCount" else {
                         var _c:GoUInt8 = _p[(_i + (2 : GoInt) : GoInt)];
                         if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                             _size = (1 : GoInt);
-                        } else if (_size == ((3 : GoInt))) {} else {
+                        } else if (_size == ((3 : GoInt))) throw "not implemented: runeCount" else {
                             var _c:GoUInt8 = _p[(_i + (3 : GoInt) : GoInt)];
                             if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                                 _size = (1 : GoInt);
@@ -916,11 +916,11 @@ function runeCountInString(_s:GoString):GoInt {
                     var _c:GoUInt8 = _s[(_i + (1 : GoInt) : GoInt)];
                     if ((_c < _accept._lo) || (_accept._hi < _c)) {
                         _size = (1 : GoInt);
-                    } else if (_size == ((2 : GoInt))) {} else {
+                    } else if (_size == ((2 : GoInt))) throw "not implemented: runeCountInString" else {
                         var _c:GoUInt8 = _s[(_i + (2 : GoInt) : GoInt)];
                         if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                             _size = (1 : GoInt);
-                        } else if (_size == ((3 : GoInt))) {} else {
+                        } else if (_size == ((3 : GoInt))) throw "not implemented: runeCountInString" else {
                             var _c:GoUInt8 = _s[(_i + (3 : GoInt) : GoInt)];
                             if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                                 _size = (1 : GoInt);
@@ -976,11 +976,11 @@ function valid(_p:Slice<GoByte>):Bool {
                     var _c:GoUInt8 = _p[(_i + (1 : GoInt) : GoInt)];
                     if ((_c < _accept._lo) || (_accept._hi < _c)) {
                         return false;
-                    } else if (_size == ((2 : GoInt))) {} else {
+                    } else if (_size == ((2 : GoInt))) throw "not implemented: valid" else {
                         var _c:GoUInt8 = _p[(_i + (2 : GoInt) : GoInt)];
                         if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                             return false;
-                        } else if (_size == ((3 : GoInt))) {} else {
+                        } else if (_size == ((3 : GoInt))) throw "not implemented: valid" else {
                             var _c:GoUInt8 = _p[(_i + (3 : GoInt) : GoInt)];
                             if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                                 return false;
@@ -1027,11 +1027,11 @@ function validString(_s:GoString):Bool {
                     var _c:GoUInt8 = _s[(_i + (1 : GoInt) : GoInt)];
                     if ((_c < _accept._lo) || (_accept._hi < _c)) {
                         return false;
-                    } else if (_size == ((2 : GoInt))) {} else {
+                    } else if (_size == ((2 : GoInt))) throw "not implemented: validString" else {
                         var _c:GoUInt8 = _s[(_i + (2 : GoInt) : GoInt)];
                         if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                             return false;
-                        } else if (_size == ((3 : GoInt))) {} else {
+                        } else if (_size == ((3 : GoInt))) throw "not implemented: validString" else {
                             var _c:GoUInt8 = _s[(_i + (3 : GoInt) : GoInt)];
                             if ((_c < (128 : GoUInt8)) || ((191 : GoUInt8) < _c)) {
                                 return false;

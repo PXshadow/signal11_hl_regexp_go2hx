@@ -9,4 +9,4 @@
 -D simulate_num
 -D hl-ver=1.11.0
 -D no-deprecation-warnings
---interp
+-hl test.hl

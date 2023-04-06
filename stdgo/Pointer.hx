@@ -1,8 +1,5 @@
 package stdgo;
 
-import haxe.Constraints.Constructible;
-import haxe.ds.Either;
-import haxe.macro.Context;
 import stdgo.StdGoTypes.GoInt;
 
 @:forward.new

@@ -354,13 +354,16 @@ typedef Locker = StructType & {
 @:structInit @:using(stdgo.sync.Sync.Mutex_static_extension) class Mutex {
     public var _state : GoInt32 = 0;
     public var _sema : GoUInt32 = 0;
-    public function new(?_state:GoInt32, ?_sema:GoUInt32) {
+    @:local
+    var mutex = #if !js new sys.thread.Mutex() #else null #end;
+    public function new(?_state:GoInt32, ?_sema:GoUInt32, ?mutex) {
         if (_state != null) this._state = _state;
         if (_sema != null) this._sema = _sema;
+        if (mutex != null) this.mutex = mutex;
     }
     public function __underlying__() return Go.toInterface(this);
     public function __copy__() {
-        return new Mutex(_state, _sema);
+        return new Mutex(_state, _sema, mutex);
     }
 }
 /**
@@ -444,17 +447,20 @@ typedef Locker = StructType & {
         // It may not be changed concurrently with calls to Get.
     **/
     public var new_ : () -> AnyInterface = null;
-    public function new(?_noCopy:stdgo.sync.Sync.T_noCopy, ?_local:stdgo.unsafe.Unsafe.UnsafePointer, ?_localSize:GoUIntptr, ?_victim:stdgo.unsafe.Unsafe.UnsafePointer, ?_victimSize:GoUIntptr, ?new_:() -> AnyInterface) {
+    @:local
+    var pool = #if !js new sys.thread.Deque<AnyInterface>() #else new Array<AnyInterface>() #end;
+    public function new(?_noCopy:stdgo.sync.Sync.T_noCopy, ?_local:stdgo.unsafe.Unsafe.UnsafePointer, ?_localSize:GoUIntptr, ?_victim:stdgo.unsafe.Unsafe.UnsafePointer, ?_victimSize:GoUIntptr, ?new_:() -> AnyInterface, ?pool) {
         if (_noCopy != null) this._noCopy = _noCopy;
         if (_local != null) this._local = _local;
         if (_localSize != null) this._localSize = _localSize;
         if (_victim != null) this._victim = _victim;
         if (_victimSize != null) this._victimSize = _victimSize;
         if (new_ != null) this.new_ = new_;
+        if (pool != null) this.pool = pool;
     }
     public function __underlying__() return Go.toInterface(this);
     public function __copy__() {
-        return new Pool(_noCopy, _local, _localSize, _victim, _victimSize, new_);
+        return new Pool(_noCopy, _local, _localSize, _victim, _victimSize, new_, pool);
     }
 }
 /**
@@ -702,16 +708,19 @@ class T__struct_42_asInterface {
     public var _readerSem : GoUInt32 = 0;
     public var _readerCount : stdgo.sync.atomic.Atomic.Int32 = ({} : stdgo.sync.atomic.Atomic.Int32);
     public var _readerWait : stdgo.sync.atomic.Atomic.Int32 = ({} : stdgo.sync.atomic.Atomic.Int32);
-    public function new(?_w:stdgo.sync.Sync.Mutex, ?_writerSem:GoUInt32, ?_readerSem:GoUInt32, ?_readerCount:stdgo.sync.atomic.Atomic.Int32, ?_readerWait:stdgo.sync.atomic.Atomic.Int32) {
+    @:local
+    var mutex = #if !js new sys.thread.Mutex() #else null #end;
+    public function new(?_w:stdgo.sync.Sync.Mutex, ?_writerSem:GoUInt32, ?_readerSem:GoUInt32, ?_readerCount:stdgo.sync.atomic.Atomic.Int32, ?_readerWait:stdgo.sync.atomic.Atomic.Int32, ?mutex) {
         if (_w != null) this._w = _w;
         if (_writerSem != null) this._writerSem = _writerSem;
         if (_readerSem != null) this._readerSem = _readerSem;
         if (_readerCount != null) this._readerCount = _readerCount;
         if (_readerWait != null) this._readerWait = _readerWait;
+        if (mutex != null) this.mutex = mutex;
     }
     public function __underlying__() return Go.toInterface(this);
     public function __copy__() {
-        return new RWMutex(_w, _writerSem, _readerSem, _readerCount, _readerWait);
+        return new RWMutex(_w, _writerSem, _readerSem, _readerCount, _readerWait, mutex);
     }
 }
 /**
@@ -732,14 +741,19 @@ class T__struct_42_asInterface {
     public var _noCopy : stdgo.sync.Sync.T_noCopy = ({} : stdgo.sync.Sync.T_noCopy);
     public var _state : stdgo.sync.atomic.Atomic.Uint64 = ({} : stdgo.sync.atomic.Atomic.Uint64);
     public var _sema : GoUInt32 = 0;
-    public function new(?_noCopy:stdgo.sync.Sync.T_noCopy, ?_state:stdgo.sync.atomic.Atomic.Uint64, ?_sema:GoUInt32) {
+    @:local
+    var lock = #if !js new sys.thread.Lock() #else null #end;
+    var counter : GoUInt = 0;
+    public function new(?_noCopy:stdgo.sync.Sync.T_noCopy, ?_state:stdgo.sync.atomic.Atomic.Uint64, ?_sema:GoUInt32, ?lock, ?counter:GoUInt) {
         if (_noCopy != null) this._noCopy = _noCopy;
         if (_state != null) this._state = _state;
         if (_sema != null) this._sema = _sema;
+        if (lock != null) this.lock = lock;
+        if (counter != null) this.counter = counter;
     }
     public function __underlying__() return Go.toInterface(this);
     public function __copy__() {
-        return new WaitGroup(_noCopy, _state, _sema);
+        return new WaitGroup(_noCopy, _state, _sema, lock, counter);
     }
 }
 /**
@@ -756,17 +770,17 @@ class T__struct_42_asInterface {
 /**
     // NewCond returns a new Cond with Locker l.
 **/
-function newCond(_l:Locker):Ref<Cond> throw "stdgo.sync.newCond is not yet implemented";
-private function _newEntry(_i:AnyInterface):Ref<T_entry> throw "stdgo.sync._newEntry is not yet implemented";
+function newCond(_l:Locker):Ref<Cond> throw "sync.newCond is not yet implemented";
+private function _newEntry(_i:AnyInterface):Ref<T_entry> throw "sync._newEntry is not yet implemented";
 /**
     // Provided by runtime via linkname.
 **/
-private function _throw(_0:GoString):Void throw "stdgo.sync._throw is not yet implemented";
-private function _fatal(_0:GoString):Void throw "stdgo.sync._fatal is not yet implemented";
+private function _throw(_0:GoString):Void throw "sync._throw is not yet implemented";
+private function _fatal(_0:GoString):Void throw "sync._fatal is not yet implemented";
 /**
     // from runtime
 **/
-private function _fastrandn(_n:GoUInt32):GoUInt32 throw "stdgo.sync._fastrandn is not yet implemented";
+private function _fastrandn(_n:GoUInt32):GoUInt32 throw "sync._fastrandn is not yet implemented";
 /**
     // poolRaceAddr returns an address to use as the synchronization point
     // for race detector logic. We don't use the actual pointer stored in x
@@ -774,31 +788,31 @@ private function _fastrandn(_n:GoUInt32):GoUInt32 throw "stdgo.sync._fastrandn i
     // Instead, we hash the pointer to get an index into poolRaceHash.
     // See discussion on golang.org/cl/31589.
 **/
-private function _poolRaceAddr(_x:AnyInterface):stdgo.unsafe.Unsafe.UnsafePointer throw "stdgo.sync._poolRaceAddr is not yet implemented";
-private function _poolCleanup():Void throw "stdgo.sync._poolCleanup is not yet implemented";
-private function _indexLocal(_l:stdgo.unsafe.Unsafe.UnsafePointer, _i:GoInt):Ref<T_poolLocal> throw "stdgo.sync._indexLocal is not yet implemented";
+private function _poolRaceAddr(_x:AnyInterface):stdgo.unsafe.Unsafe.UnsafePointer throw "sync._poolRaceAddr is not yet implemented";
+private function _poolCleanup():Void throw "sync._poolCleanup is not yet implemented";
+private function _indexLocal(_l:stdgo.unsafe.Unsafe.UnsafePointer, _i:GoInt):Ref<T_poolLocal> throw "sync._indexLocal is not yet implemented";
 /**
     // Implemented in runtime.
 **/
-private function _runtime_registerPoolCleanup(_cleanup:() -> Void):Void throw "stdgo.sync._runtime_registerPoolCleanup is not yet implemented";
-private function _runtime_procPin():GoInt throw "stdgo.sync._runtime_procPin is not yet implemented";
-private function _runtime_procUnpin():Void throw "stdgo.sync._runtime_procUnpin is not yet implemented";
+private function _runtime_registerPoolCleanup(_cleanup:() -> Void):Void throw "sync._runtime_registerPoolCleanup is not yet implemented";
+private function _runtime_procPin():GoInt throw "sync._runtime_procPin is not yet implemented";
+private function _runtime_procUnpin():Void throw "sync._runtime_procUnpin is not yet implemented";
 /**
     //go:linkname runtime_LoadAcquintptr runtime/internal/atomic.LoadAcquintptr
 **/
-private function _runtime_LoadAcquintptr(_ptr:Pointer<GoUIntptr>):GoUIntptr throw "stdgo.sync._runtime_LoadAcquintptr is not yet implemented";
+private function _runtime_LoadAcquintptr(_ptr:Pointer<GoUIntptr>):GoUIntptr throw "sync._runtime_LoadAcquintptr is not yet implemented";
 /**
     //go:linkname runtime_StoreReluintptr runtime/internal/atomic.StoreReluintptr
 **/
-private function _runtime_StoreReluintptr(_ptr:Pointer<GoUIntptr>, _val:GoUIntptr):GoUIntptr throw "stdgo.sync._runtime_StoreReluintptr is not yet implemented";
-private function _storePoolChainElt(_pp:Ref<Ref<T_poolChainElt>>, _v:Ref<T_poolChainElt>):Void throw "stdgo.sync._storePoolChainElt is not yet implemented";
-private function _loadPoolChainElt(_pp:Ref<Ref<T_poolChainElt>>):Ref<T_poolChainElt> throw "stdgo.sync._loadPoolChainElt is not yet implemented";
+private function _runtime_StoreReluintptr(_ptr:Pointer<GoUIntptr>, _val:GoUIntptr):GoUIntptr throw "sync._runtime_StoreReluintptr is not yet implemented";
+private function _storePoolChainElt(_pp:Ref<Ref<T_poolChainElt>>, _v:Ref<T_poolChainElt>):Void throw "sync._storePoolChainElt is not yet implemented";
+private function _loadPoolChainElt(_pp:Ref<Ref<T_poolChainElt>>):Ref<T_poolChainElt> throw "sync._loadPoolChainElt is not yet implemented";
 /**
     // Semacquire waits until *s > 0 and then atomically decrements it.
     // It is intended as a simple sleep primitive for use by the synchronization
     // library and should not be used directly.
 **/
-private function _runtime_Semacquire(_s:Pointer<GoUInt32>):Void throw "stdgo.sync._runtime_Semacquire is not yet implemented";
+private function _runtime_Semacquire(_s:Pointer<GoUInt32>):Void throw "sync._runtime_Semacquire is not yet implemented";
 /**
     // Semacquire(RW)Mutex(R) is like Semacquire, but for profiling contended
     // Mutexes and RWMutexes.
@@ -809,9 +823,9 @@ private function _runtime_Semacquire(_s:Pointer<GoUInt32>):Void throw "stdgo.syn
     // the reason for waiting in a backtrace, and is used to compute some metrics.
     // Otherwise they're functionally identical.
 **/
-private function _runtime_SemacquireMutex(_s:Pointer<GoUInt32>, _lifo:Bool, _skipframes:GoInt):Void throw "stdgo.sync._runtime_SemacquireMutex is not yet implemented";
-private function _runtime_SemacquireRWMutexR(_s:Pointer<GoUInt32>, _lifo:Bool, _skipframes:GoInt):Void throw "stdgo.sync._runtime_SemacquireRWMutexR is not yet implemented";
-private function _runtime_SemacquireRWMutex(_s:Pointer<GoUInt32>, _lifo:Bool, _skipframes:GoInt):Void throw "stdgo.sync._runtime_SemacquireRWMutex is not yet implemented";
+private function _runtime_SemacquireMutex(_s:Pointer<GoUInt32>, _lifo:Bool, _skipframes:GoInt):Void throw "sync._runtime_SemacquireMutex is not yet implemented";
+private function _runtime_SemacquireRWMutexR(_s:Pointer<GoUInt32>, _lifo:Bool, _skipframes:GoInt):Void throw "sync._runtime_SemacquireRWMutexR is not yet implemented";
+private function _runtime_SemacquireRWMutex(_s:Pointer<GoUInt32>, _lifo:Bool, _skipframes:GoInt):Void throw "sync._runtime_SemacquireRWMutex is not yet implemented";
 /**
     // Semrelease atomically increments *s and notifies a waiting goroutine
     // if one is blocked in Semacquire.
@@ -821,37 +835,37 @@ private function _runtime_SemacquireRWMutex(_s:Pointer<GoUInt32>, _lifo:Bool, _s
     // skipframes is the number of frames to omit during tracing, counting from
     // runtime_Semrelease's caller.
 **/
-private function _runtime_Semrelease(_s:Pointer<GoUInt32>, _handoff:Bool, _skipframes:GoInt):Void throw "stdgo.sync._runtime_Semrelease is not yet implemented";
+private function _runtime_Semrelease(_s:Pointer<GoUInt32>, _handoff:Bool, _skipframes:GoInt):Void throw "sync._runtime_Semrelease is not yet implemented";
 /**
     // See runtime/sema.go for documentation.
 **/
-private function _runtime_notifyListAdd(_l:Ref<T_notifyList>):GoUInt32 throw "stdgo.sync._runtime_notifyListAdd is not yet implemented";
+private function _runtime_notifyListAdd(_l:Ref<T_notifyList>):GoUInt32 throw "sync._runtime_notifyListAdd is not yet implemented";
 /**
     // See runtime/sema.go for documentation.
 **/
-private function _runtime_notifyListWait(_l:Ref<T_notifyList>, _t:GoUInt32):Void throw "stdgo.sync._runtime_notifyListWait is not yet implemented";
+private function _runtime_notifyListWait(_l:Ref<T_notifyList>, _t:GoUInt32):Void throw "sync._runtime_notifyListWait is not yet implemented";
 /**
     // See runtime/sema.go for documentation.
 **/
-private function _runtime_notifyListNotifyAll(_l:Ref<T_notifyList>):Void throw "stdgo.sync._runtime_notifyListNotifyAll is not yet implemented";
+private function _runtime_notifyListNotifyAll(_l:Ref<T_notifyList>):Void throw "sync._runtime_notifyListNotifyAll is not yet implemented";
 /**
     // See runtime/sema.go for documentation.
 **/
-private function _runtime_notifyListNotifyOne(_l:Ref<T_notifyList>):Void throw "stdgo.sync._runtime_notifyListNotifyOne is not yet implemented";
+private function _runtime_notifyListNotifyOne(_l:Ref<T_notifyList>):Void throw "sync._runtime_notifyListNotifyOne is not yet implemented";
 /**
     // Ensure that sync and runtime agree on size of notifyList.
 **/
-private function _runtime_notifyListCheck(_size:GoUIntptr):Void throw "stdgo.sync._runtime_notifyListCheck is not yet implemented";
+private function _runtime_notifyListCheck(_size:GoUIntptr):Void throw "sync._runtime_notifyListCheck is not yet implemented";
 /**
     // Active spinning runtime support.
     // runtime_canSpin reports whether spinning makes sense at the moment.
 **/
-private function _runtime_canSpin(_i:GoInt):Bool throw "stdgo.sync._runtime_canSpin is not yet implemented";
+private function _runtime_canSpin(_i:GoInt):Bool throw "sync._runtime_canSpin is not yet implemented";
 /**
     // runtime_doSpin does active spinning.
 **/
-private function _runtime_doSpin():Void throw "stdgo.sync._runtime_doSpin is not yet implemented";
-private function _runtime_nanotime():GoInt64 throw "stdgo.sync._runtime_nanotime is not yet implemented";
+private function _runtime_doSpin():Void throw "sync._runtime_doSpin is not yet implemented";
+private function _runtime_nanotime():GoInt64 throw "sync._runtime_nanotime is not yet implemented";
 class Cond_asInterface {
     /**
         // Broadcast wakes all goroutines waiting on c.
@@ -907,7 +921,7 @@ class Cond_asInterface {
         // during the call.
     **/
     @:keep
-    static public function broadcast( _c:Ref<Cond>):Void throw "stdgo.sync.broadcast is not yet implemented";
+    static public function broadcast( _c:Ref<Cond>):Void throw "sync.broadcast is not yet implemented";
     /**
         // Signal wakes one goroutine waiting on c, if there is any.
         //
@@ -918,7 +932,7 @@ class Cond_asInterface {
         // are attempting to lock c.L, they may be awoken before a "waiting" goroutine.
     **/
     @:keep
-    static public function signal( _c:Ref<Cond>):Void throw "stdgo.sync.signal is not yet implemented";
+    static public function signal( _c:Ref<Cond>):Void throw "sync.signal is not yet implemented";
     /**
         // Wait atomically unlocks c.L and suspends execution
         // of the calling goroutine. After later resuming execution,
@@ -937,7 +951,7 @@ class Cond_asInterface {
         //	c.L.Unlock()
     **/
     @:keep
-    static public function wait_( _c:Ref<Cond>):Void throw "stdgo.sync.wait_ is not yet implemented";
+    static public function wait_( _c:Ref<Cond>):Void throw "sync.wait_ is not yet implemented";
 }
 class T_noCopy_asInterface {
     @:keep
@@ -957,12 +971,12 @@ class T_noCopy_asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.T_noCopy_asInterface) class T_noCopy_static_extension {
     @:keep
-    static public function unlock( _:Ref<T_noCopy>):Void throw "stdgo.sync.unlock is not yet implemented";
+    static public function unlock( _:Ref<T_noCopy>):Void throw "sync.unlock is not yet implemented";
     /**
         // Lock is a no-op used by -copylocks checker from `go vet`.
     **/
     @:keep
-    static public function lock( _:Ref<T_noCopy>):Void throw "stdgo.sync.lock is not yet implemented";
+    static public function lock( _:Ref<T_noCopy>):Void throw "sync.lock is not yet implemented";
 }
 class Map__asInterface {
     @:keep
@@ -1048,9 +1062,9 @@ class Map__asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.Map__asInterface) class Map__static_extension {
     @:keep
-    static public function _dirtyLocked( _m:Ref<Map_>):Void throw "stdgo.sync._dirtyLocked is not yet implemented";
+    static public function _dirtyLocked( _m:Ref<Map_>):Void throw "sync._dirtyLocked is not yet implemented";
     @:keep
-    static public function _missLocked( _m:Ref<Map_>):Void throw "stdgo.sync._missLocked is not yet implemented";
+    static public function _missLocked( _m:Ref<Map_>):Void throw "sync._missLocked is not yet implemented";
     /**
         // Range calls f sequentially for each key and value present in the map.
         // If f returns false, range stops the iteration.
@@ -1065,7 +1079,7 @@ class Map__asInterface {
         // false after a constant number of calls.
     **/
     @:keep
-    static public function range( _m:Ref<Map_>, _f:(_key:AnyInterface, _value:AnyInterface) -> Bool):Void throw "stdgo.sync.range is not yet implemented";
+    static public function range( _m:Ref<Map_>, _f:(_key:AnyInterface, _value:AnyInterface) -> Bool):Void throw "sync.range is not yet implemented";
     /**
         // CompareAndDelete deletes the entry for key if its value is equal to old.
         // The old value must be of a comparable type.
@@ -1074,52 +1088,52 @@ class Map__asInterface {
         // returns false (even if the old value is the nil interface value).
     **/
     @:keep
-    static public function compareAndDelete( _m:Ref<Map_>, _key:AnyInterface, _old:AnyInterface):Bool throw "stdgo.sync.compareAndDelete is not yet implemented";
+    static public function compareAndDelete( _m:Ref<Map_>, _key:AnyInterface, _old:AnyInterface):Bool throw "sync.compareAndDelete is not yet implemented";
     /**
         // CompareAndSwap swaps the old and new values for key
         // if the value stored in the map is equal to old.
         // The old value must be of a comparable type.
     **/
     @:keep
-    static public function compareAndSwap( _m:Ref<Map_>, _key:AnyInterface, _old:AnyInterface, _new:AnyInterface):Bool throw "stdgo.sync.compareAndSwap is not yet implemented";
+    static public function compareAndSwap( _m:Ref<Map_>, _key:AnyInterface, _old:AnyInterface, _new:AnyInterface):Bool throw "sync.compareAndSwap is not yet implemented";
     /**
         // Swap swaps the value for a key and returns the previous value if any.
         // The loaded result reports whether the key was present.
     **/
     @:keep
-    static public function swap( _m:Ref<Map_>, _key:AnyInterface, _value:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync.swap is not yet implemented";
+    static public function swap( _m:Ref<Map_>, _key:AnyInterface, _value:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync.swap is not yet implemented";
     /**
         // Delete deletes the value for a key.
     **/
     @:keep
-    static public function delete( _m:Ref<Map_>, _key:AnyInterface):Void throw "stdgo.sync.delete is not yet implemented";
+    static public function delete( _m:Ref<Map_>, _key:AnyInterface):Void throw "sync.delete is not yet implemented";
     /**
         // LoadAndDelete deletes the value for a key, returning the previous value if any.
         // The loaded result reports whether the key was present.
     **/
     @:keep
-    static public function loadAndDelete( _m:Ref<Map_>, _key:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync.loadAndDelete is not yet implemented";
+    static public function loadAndDelete( _m:Ref<Map_>, _key:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync.loadAndDelete is not yet implemented";
     /**
         // LoadOrStore returns the existing value for the key if present.
         // Otherwise, it stores and returns the given value.
         // The loaded result is true if the value was loaded, false if stored.
     **/
     @:keep
-    static public function loadOrStore( _m:Ref<Map_>, _key:AnyInterface, _value:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync.loadOrStore is not yet implemented";
+    static public function loadOrStore( _m:Ref<Map_>, _key:AnyInterface, _value:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync.loadOrStore is not yet implemented";
     /**
         // Store sets the value for a key.
     **/
     @:keep
-    static public function store( _m:Ref<Map_>, _key:AnyInterface, _value:AnyInterface):Void throw "stdgo.sync.store is not yet implemented";
+    static public function store( _m:Ref<Map_>, _key:AnyInterface, _value:AnyInterface):Void throw "sync.store is not yet implemented";
     /**
         // Load returns the value stored in the map for a key, or nil if no
         // value is present.
         // The ok result indicates whether value was found in the map.
     **/
     @:keep
-    static public function load( _m:Ref<Map_>, _key:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync.load is not yet implemented";
+    static public function load( _m:Ref<Map_>, _key:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync.load is not yet implemented";
     @:keep
-    static public function _loadReadOnly( _m:Ref<Map_>):T_readOnly throw "stdgo.sync._loadReadOnly is not yet implemented";
+    static public function _loadReadOnly( _m:Ref<Map_>):T_readOnly throw "sync._loadReadOnly is not yet implemented";
 }
 class T_entry_asInterface {
     @:keep
@@ -1180,7 +1194,7 @@ class T_entry_asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.T_entry_asInterface) class T_entry_static_extension {
     @:keep
-    static public function _tryExpungeLocked( _e:Ref<T_entry>):Bool throw "stdgo.sync._tryExpungeLocked is not yet implemented";
+    static public function _tryExpungeLocked( _e:Ref<T_entry>):Bool throw "sync._tryExpungeLocked is not yet implemented";
     /**
         // trySwap swaps a value if the entry has not been expunged.
         //
@@ -1188,9 +1202,9 @@ class T_entry_asInterface {
         // unchanged.
     **/
     @:keep
-    static public function _trySwap( _e:Ref<T_entry>, _i:Ref<AnyInterface>):{ var _0 : Ref<AnyInterface>; var _1 : Bool; } throw "stdgo.sync._trySwap is not yet implemented";
+    static public function _trySwap( _e:Ref<T_entry>, _i:Ref<AnyInterface>):{ var _0 : Ref<AnyInterface>; var _1 : Bool; } throw "sync._trySwap is not yet implemented";
     @:keep
-    static public function _delete( _e:Ref<T_entry>):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync._delete is not yet implemented";
+    static public function _delete( _e:Ref<T_entry>):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync._delete is not yet implemented";
     /**
         // tryLoadOrStore atomically loads or stores a value if the entry is not
         // expunged.
@@ -1199,14 +1213,14 @@ class T_entry_asInterface {
         // returns with ok==false.
     **/
     @:keep
-    static public function _tryLoadOrStore( _e:Ref<T_entry>, _i:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; var _2 : Bool; } throw "stdgo.sync._tryLoadOrStore is not yet implemented";
+    static public function _tryLoadOrStore( _e:Ref<T_entry>, _i:AnyInterface):{ var _0 : AnyInterface; var _1 : Bool; var _2 : Bool; } throw "sync._tryLoadOrStore is not yet implemented";
     /**
         // swapLocked unconditionally swaps a value into the entry.
         //
         // The entry must be known not to be expunged.
     **/
     @:keep
-    static public function _swapLocked( _e:Ref<T_entry>, _i:Ref<AnyInterface>):Ref<AnyInterface> throw "stdgo.sync._swapLocked is not yet implemented";
+    static public function _swapLocked( _e:Ref<T_entry>, _i:Ref<AnyInterface>):Ref<AnyInterface> throw "sync._swapLocked is not yet implemented";
     /**
         // unexpungeLocked ensures that the entry is not marked as expunged.
         //
@@ -1214,7 +1228,7 @@ class T_entry_asInterface {
         // before m.mu is unlocked.
     **/
     @:keep
-    static public function _unexpungeLocked( _e:Ref<T_entry>):Bool throw "stdgo.sync._unexpungeLocked is not yet implemented";
+    static public function _unexpungeLocked( _e:Ref<T_entry>):Bool throw "sync._unexpungeLocked is not yet implemented";
     /**
         // tryCompareAndSwap compare the entry with the given old value and swaps
         // it with a new value if the entry is equal to the old value, and the entry
@@ -1224,9 +1238,9 @@ class T_entry_asInterface {
         // the entry unchanged.
     **/
     @:keep
-    static public function _tryCompareAndSwap( _e:Ref<T_entry>, _old:AnyInterface, _new:AnyInterface):Bool throw "stdgo.sync._tryCompareAndSwap is not yet implemented";
+    static public function _tryCompareAndSwap( _e:Ref<T_entry>, _old:AnyInterface, _new:AnyInterface):Bool throw "sync._tryCompareAndSwap is not yet implemented";
     @:keep
-    static public function _load( _e:Ref<T_entry>):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync._load is not yet implemented";
+    static public function _load( _e:Ref<T_entry>):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync._load is not yet implemented";
 }
 class Mutex_asInterface {
     @:keep
@@ -1269,7 +1283,7 @@ class Mutex_asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.Mutex_asInterface) class Mutex_static_extension {
     @:keep
-    static public function _unlockSlow( _m:Ref<Mutex>, _new:GoInt32):Void throw "stdgo.sync._unlockSlow is not yet implemented";
+    static public function _unlockSlow( _m:Ref<Mutex>, _new:GoInt32):Void throw "sync._unlockSlow is not yet implemented";
     /**
         // Unlock unlocks m.
         // It is a run-time error if m is not locked on entry to Unlock.
@@ -1279,9 +1293,9 @@ class Mutex_asInterface {
         // arrange for another goroutine to unlock it.
     **/
     @:keep
-    static public function unlock( _m:Ref<Mutex>):Void throw "stdgo.sync.unlock is not yet implemented";
+    static public function unlock( _m:Ref<Mutex>):Void @:privateAccess #if !js _m.mutex.release() #else null #end;
     @:keep
-    static public function _lockSlow( _m:Ref<Mutex>):Void throw "stdgo.sync._lockSlow is not yet implemented";
+    static public function _lockSlow( _m:Ref<Mutex>):Void throw "sync._lockSlow is not yet implemented";
     /**
         // TryLock tries to lock m and reports whether it succeeded.
         //
@@ -1290,14 +1304,14 @@ class Mutex_asInterface {
         // in a particular use of mutexes.
     **/
     @:keep
-    static public function tryLock( _m:Ref<Mutex>):Bool throw "stdgo.sync.tryLock is not yet implemented";
+    static public function tryLock( _m:Ref<Mutex>):Bool @:privateAccess return #if !js _m.mutex.tryAcquire() #else true #end;
     /**
         // Lock locks m.
         // If the lock is already in use, the calling goroutine
         // blocks until the mutex is available.
     **/
     @:keep
-    static public function lock( _m:Ref<Mutex>):Void throw "stdgo.sync.lock is not yet implemented";
+    static public function lock( _m:Ref<Mutex>):Void @:privateAccess #if !js _m.mutex.acquire() #else null #end;
 }
 class Once_asInterface {
     @:keep
@@ -1336,7 +1350,7 @@ class Once_asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.Once_asInterface) class Once_static_extension {
     @:keep
-    static public function _doSlow( _o:Ref<Once>, _f:() -> Void):Void throw "stdgo.sync._doSlow is not yet implemented";
+    static public function _doSlow( _o:Ref<Once>, _f:() -> Void):Void throw "sync._doSlow is not yet implemented";
     /**
         // Do calls the function f if and only if Do is being called for the
         // first time for this instance of Once. In other words, given
@@ -1360,7 +1374,11 @@ class Once_asInterface {
         // without calling f.
     **/
     @:keep
-    static public function do_( _o:Ref<Once>, _f:() -> Void):Void throw "stdgo.sync.do_ is not yet implemented";
+    static public function do_( _o:Ref<Once>, _f:() -> Void):Void {
+        if (@:privateAccess _o._done == 1) return;
+        @:privateAccess _o._done = 1;
+        _f();
+    }
 }
 class Pool_asInterface {
     @:keep
@@ -1401,16 +1419,16 @@ class Pool_asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.Pool_asInterface) class Pool_static_extension {
     @:keep
-    static public function _pinSlow( _p:Ref<Pool>):{ var _0 : Ref<T_poolLocal>; var _1 : GoInt; } throw "stdgo.sync._pinSlow is not yet implemented";
+    static public function _pinSlow( _p:Ref<Pool>):{ var _0 : Ref<T_poolLocal>; var _1 : GoInt; } throw "sync._pinSlow is not yet implemented";
     /**
         // pin pins the current goroutine to P, disables preemption and
         // returns poolLocal pool for the P and the P's id.
         // Caller must call runtime_procUnpin() when done with the pool.
     **/
     @:keep
-    static public function _pin( _p:Ref<Pool>):{ var _0 : Ref<T_poolLocal>; var _1 : GoInt; } throw "stdgo.sync._pin is not yet implemented";
+    static public function _pin( _p:Ref<Pool>):{ var _0 : Ref<T_poolLocal>; var _1 : GoInt; } throw "sync._pin is not yet implemented";
     @:keep
-    static public function _getSlow( _p:Ref<Pool>, _pid:GoInt):AnyInterface throw "stdgo.sync._getSlow is not yet implemented";
+    static public function _getSlow( _p:Ref<Pool>, _pid:GoInt):AnyInterface throw "sync._getSlow is not yet implemented";
     /**
         // Get selects an arbitrary item from the Pool, removes it from the
         // Pool, and returns it to the caller.
@@ -1422,12 +1440,18 @@ class Pool_asInterface {
         // the result of calling p.New.
     **/
     @:keep
-    static public function get( _p:Ref<Pool>):AnyInterface throw "stdgo.sync.get is not yet implemented";
+    static public function get( _p:Ref<Pool>):AnyInterface {
+        var obj = #if !js @:privateAccess _p.pool.pop(false) #else @:privateAccess _p.pool.pop() #end;
+        if (obj == null && @:privateAccess _p.new_ != null) obj = @:privateAccess _p.new_();
+        return obj;
+    }
     /**
         // Put adds x to the pool.
     **/
     @:keep
-    static public function put( _p:Ref<Pool>, _x:AnyInterface):Void throw "stdgo.sync.put is not yet implemented";
+    static public function put( _p:Ref<Pool>, _x:AnyInterface):Void {
+        @:privateAccess _p.pool.push(_x);
+    }
 }
 class T_poolLocal_asInterface {
     public function new(__self__, __type__) {
@@ -1481,24 +1505,24 @@ class T_poolDequeue_asInterface {
         // number of consumers.
     **/
     @:keep
-    static public function _popTail( _d:Ref<T_poolDequeue>):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync._popTail is not yet implemented";
+    static public function _popTail( _d:Ref<T_poolDequeue>):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync._popTail is not yet implemented";
     /**
         // popHead removes and returns the element at the head of the queue.
         // It returns false if the queue is empty. It must only be called by a
         // single producer.
     **/
     @:keep
-    static public function _popHead( _d:Ref<T_poolDequeue>):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync._popHead is not yet implemented";
+    static public function _popHead( _d:Ref<T_poolDequeue>):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync._popHead is not yet implemented";
     /**
         // pushHead adds val at the head of the queue. It returns false if the
         // queue is full. It must only be called by a single producer.
     **/
     @:keep
-    static public function _pushHead( _d:Ref<T_poolDequeue>, _val:AnyInterface):Bool throw "stdgo.sync._pushHead is not yet implemented";
+    static public function _pushHead( _d:Ref<T_poolDequeue>, _val:AnyInterface):Bool throw "sync._pushHead is not yet implemented";
     @:keep
-    static public function _pack( _d:Ref<T_poolDequeue>, _head:GoUInt32, _tail:GoUInt32):GoUInt64 throw "stdgo.sync._pack is not yet implemented";
+    static public function _pack( _d:Ref<T_poolDequeue>, _head:GoUInt32, _tail:GoUInt32):GoUInt64 throw "sync._pack is not yet implemented";
     @:keep
-    static public function _unpack( _d:Ref<T_poolDequeue>, _ptrs:GoUInt64):{ var _0 : GoUInt32; var _1 : GoUInt32; } throw "stdgo.sync._unpack is not yet implemented";
+    static public function _unpack( _d:Ref<T_poolDequeue>, _ptrs:GoUInt64):{ var _0 : GoUInt32; var _1 : GoUInt32; } throw "sync._unpack is not yet implemented";
 }
 class T_poolChain_asInterface {
     @:keep
@@ -1517,11 +1541,11 @@ class T_poolChain_asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.T_poolChain_asInterface) class T_poolChain_static_extension {
     @:keep
-    static public function _popTail( _c:Ref<T_poolChain>):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync._popTail is not yet implemented";
+    static public function _popTail( _c:Ref<T_poolChain>):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync._popTail is not yet implemented";
     @:keep
-    static public function _popHead( _c:Ref<T_poolChain>):{ var _0 : AnyInterface; var _1 : Bool; } throw "stdgo.sync._popHead is not yet implemented";
+    static public function _popHead( _c:Ref<T_poolChain>):{ var _0 : AnyInterface; var _1 : Bool; } throw "sync._popHead is not yet implemented";
     @:keep
-    static public function _pushHead( _c:Ref<T_poolChain>, _val:AnyInterface):Void throw "stdgo.sync._pushHead is not yet implemented";
+    static public function _pushHead( _c:Ref<T_poolChain>, _val:AnyInterface):Void throw "sync._pushHead is not yet implemented";
 }
 class T_poolChainElt_asInterface {
     @:embedded
@@ -1629,7 +1653,7 @@ class RWMutex_asInterface {
         // the Lock and Unlock methods by calling rw.RLock and rw.RUnlock.
     **/
     @:keep
-    static public function rlocker( _rw:Ref<RWMutex>):Locker throw "stdgo.sync.rlocker is not yet implemented";
+    static public function rlocker( _rw:Ref<RWMutex>):Locker throw "sync.rlocker is not yet implemented";
     /**
         // Unlock unlocks rw for writing. It is a run-time error if rw is
         // not locked for writing on entry to Unlock.
@@ -1639,7 +1663,7 @@ class RWMutex_asInterface {
         // arrange for another goroutine to RUnlock (Unlock) it.
     **/
     @:keep
-    static public function unlock( _rw:Ref<RWMutex>):Void throw "stdgo.sync.unlock is not yet implemented";
+    static public function unlock( _rw:Ref<RWMutex>):Void throw "sync.unlock is not yet implemented";
     /**
         // TryLock tries to lock rw for writing and reports whether it succeeded.
         //
@@ -1648,16 +1672,16 @@ class RWMutex_asInterface {
         // in a particular use of mutexes.
     **/
     @:keep
-    static public function tryLock( _rw:Ref<RWMutex>):Bool throw "stdgo.sync.tryLock is not yet implemented";
+    static public function tryLock( _rw:Ref<RWMutex>):Bool throw "sync.tryLock is not yet implemented";
     /**
         // Lock locks rw for writing.
         // If the lock is already locked for reading or writing,
         // Lock blocks until the lock is available.
     **/
     @:keep
-    static public function lock( _rw:Ref<RWMutex>):Void throw "stdgo.sync.lock is not yet implemented";
+    static public function lock( _rw:Ref<RWMutex>):Void throw "sync.lock is not yet implemented";
     @:keep
-    static public function _rUnlockSlow( _rw:Ref<RWMutex>, _r:GoInt32):Void throw "stdgo.sync._rUnlockSlow is not yet implemented";
+    static public function _rUnlockSlow( _rw:Ref<RWMutex>, _r:GoInt32):Void throw "sync._rUnlockSlow is not yet implemented";
     /**
         // RUnlock undoes a single RLock call;
         // it does not affect other simultaneous readers.
@@ -1665,7 +1689,7 @@ class RWMutex_asInterface {
         // on entry to RUnlock.
     **/
     @:keep
-    static public function runlock( _rw:Ref<RWMutex>):Void throw "stdgo.sync.runlock is not yet implemented";
+    static public function runlock( _rw:Ref<RWMutex>):Void throw "sync.runlock is not yet implemented";
     /**
         // TryRLock tries to lock rw for reading and reports whether it succeeded.
         //
@@ -1674,7 +1698,7 @@ class RWMutex_asInterface {
         // in a particular use of mutexes.
     **/
     @:keep
-    static public function tryRLock( _rw:Ref<RWMutex>):Bool throw "stdgo.sync.tryRLock is not yet implemented";
+    static public function tryRLock( _rw:Ref<RWMutex>):Bool throw "sync.tryRLock is not yet implemented";
     /**
         // RLock locks rw for reading.
         //
@@ -1683,7 +1707,7 @@ class RWMutex_asInterface {
         // documentation on the RWMutex type.
     **/
     @:keep
-    static public function rlock( _rw:Ref<RWMutex>):Void throw "stdgo.sync.rlock is not yet implemented";
+    static public function rlock( _rw:Ref<RWMutex>):Void throw "sync.rlock is not yet implemented";
 }
 class WaitGroup_asInterface {
     /**
@@ -1726,12 +1750,17 @@ class WaitGroup_asInterface {
         // Wait blocks until the WaitGroup counter is zero.
     **/
     @:keep
-    static public function wait_( _wg:Ref<WaitGroup>):Void throw "stdgo.sync.wait_ is not yet implemented";
+    static public function wait_( _wg:Ref<WaitGroup>):Void @:privateAccess #if !js _wg.lock.wait() #else null #end;
     /**
         // Done decrements the WaitGroup counter by one.
     **/
     @:keep
-    static public function done( _wg:Ref<WaitGroup>):Void throw "stdgo.sync.done is not yet implemented";
+    static public function done( _wg:Ref<WaitGroup>):Void {
+        @:privateAccess _wg.counter--;
+        if (@:privateAccess _wg.counter <= 0) {
+            @:privateAccess #if !js _wg.lock.release() #else null #end;
+        };
+    }
     /**
         // Add adds delta, which may be negative, to the WaitGroup counter.
         // If the counter becomes zero, all goroutines blocked on Wait are released.
@@ -1748,7 +1777,10 @@ class WaitGroup_asInterface {
         // See the WaitGroup example.
     **/
     @:keep
-    static public function add( _wg:Ref<WaitGroup>, _delta:GoInt):Void throw "stdgo.sync.add is not yet implemented";
+    static public function add( _wg:Ref<WaitGroup>, _delta:GoInt):Void {
+        @:privateAccess _wg.counter += _delta;
+        if (@:privateAccess _wg.counter < 0) throw "sync: negative WaitGroup counter";
+    }
 }
 class T_copyChecker_asInterface {
     @:keep
@@ -1765,7 +1797,7 @@ class T_copyChecker_asInterface {
 @:keep @:allow(stdgo.sync.Sync.T_copyChecker_asInterface) class T_copyChecker_static_extension {
     @:keep
     @:pointer
-    static public function _check(____:T_copyChecker,  _c:Pointer<T_copyChecker>):Void throw "stdgo.sync._check is not yet implemented";
+    static public function _check(____:T_copyChecker,  _c:Pointer<T_copyChecker>):Void throw "sync._check is not yet implemented";
 }
 class T_rlocker_asInterface {
     @:keep
@@ -1782,7 +1814,7 @@ class T_rlocker_asInterface {
 }
 @:keep @:allow(stdgo.sync.Sync.T_rlocker_asInterface) class T_rlocker_static_extension {
     @:keep
-    static public function unlock( _r:Ref<T_rlocker>):Void throw "stdgo.sync.unlock is not yet implemented";
+    static public function unlock( _r:Ref<T_rlocker>):Void throw "sync.unlock is not yet implemented";
     @:keep
-    static public function lock( _r:Ref<T_rlocker>):Void throw "stdgo.sync.lock is not yet implemented";
+    static public function lock( _r:Ref<T_rlocker>):Void throw "sync.lock is not yet implemented";
 }
